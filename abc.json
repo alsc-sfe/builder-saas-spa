@@ -1,0 +1,7 @@
+{
+  "type": "xdef",
+
+  "testConfig": {
+    "intelli-espower-loader": true
+  }
+}

@@ -1,0 +1,52 @@
+<%
+  const { title, chunkName, spmb, heads, bodies, env, assets_url } = htmlWebpackPlugin.options
+  const common = htmlWebpackPlugin.files.chunks.common
+  const chunk = htmlWebpackPlugin.files.chunks[chunkName]
+  const commonCSS = common && common.css[0]
+  const commonJS = common && common.entry
+  const version = '?v=' + (+ new Date())
+  const chunkCSS = chunk && chunk.css[0]
+  const chunkJS = chunk && chunk.entry
+%>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <title><%- title %></title>
+  <meta charset="utf-8" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="format-detection" content="email=no" />
+  <% for(let i = 0; i < heads.length; i++) { %>
+    <%= heads[i] %>
+  <% } %>
+  <% if (commonCSS) { %>
+  <link href="<%= assets_url %><%= commonCSS %><%= version %>" rel="stylesheet" />
+  <% } %>
+  <% if (chunkCSS) { %>
+  <link href="<%= assets_url %><%= chunkCSS %><%= version %>" rel="stylesheet" />
+  <% } %>
+  <script src="https://gw.alipayobjects.com/as/g/component/babel-polyfill/6.20.0/polyfill.min.js"></script>
+</head>
+<body>
+  <!-- <%= JSON.stringify(htmlWebpackPlugin, null, 2) %> -->
+  <main></main>
+  <% for(let i = 0; i < bodies.length; i++) { %>
+    <%= bodies[i] %>
+  <% } %>
+  <% if(env === 'development') { %>
+  <script src="https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js"></script>
+  <script src="https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js"></script>
+  <% } %>
+  <% if(env === 'production') { %>
+    <script src="https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.production.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.production.min.js"></script>
+  <% } %>
+  <% if (commonJS) { %>
+  <script src="<%= assets_url %><%= commonJS %><%= version %>"></script>
+  <% } %>
+  <% if (chunkJS) { %>
+  <script src="<%= assets_url %><%= chunkJS %><%= version %>"></script>
+  <% } %>
+</body>
+</html>

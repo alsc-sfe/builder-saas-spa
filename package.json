@@ -1,0 +1,60 @@
+{
+  "name": "@ali/builder-saas-spa",
+  "version": "1.0.0",
+  "description": "The DEF Koubei Saas builder",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "yongbao.fyb",
+  "license": "ISC",
+  "publishConfig": {
+    "registry": "http://registry.npm.alibaba-inc.com"
+  },
+  "keywords": [
+    "builder",
+    "def",
+    "cloudbuild",
+    "koubei",
+    "saas"
+  ],
+  "dependencies": {
+    "@babel/core": "7",
+    "@babel/plugin-proposal-class-properties": "7",
+    "@babel/plugin-proposal-decorators": "7",
+    "@babel/plugin-proposal-export-default-from": "7",
+    "@babel/plugin-proposal-export-namespace-from": "7",
+    "@babel/plugin-proposal-object-rest-spread": "7",
+    "@babel/plugin-transform-runtime": "7",
+    "@babel/polyfill": "7",
+    "@babel/preset-env": "7",
+    "@babel/preset-react": "7",
+    "autoprefixer": "7",
+    "babel-loader": "8",
+    "babel-plugin-import": "1",
+    "chalk": "2",
+    "css-loader": "1",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "html-webpack-plugin": "3",
+    "less": "^2.7.3",
+    "less-loader": "4",
+    "lodash": "4",
+    "optimize-css-assets-webpack-plugin": "5",
+    "postcss-loader": "3",
+    "postcss-pxtorem": "4",
+    "postcss-safe-area-inset": "1",
+    "progress-bar-webpack-plugin": "1",
+    "uglifyjs-webpack-plugin": "2",
+    "url-join": "4",
+    "url-loader": "0.5",
+    "webpack": "4",
+    "webpack-bundle-analyzer": "3",
+    "webpack-cli": "3",
+    "webpack-dev-middleware": "3",
+    "webpack-hot-middleware": "2",
+    "yargs-parser": "13"
+  },
+  "devDependencies": {},
+  "readmeFilename": "README.md"
+}
