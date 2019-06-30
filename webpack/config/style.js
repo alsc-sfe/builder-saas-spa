@@ -12,6 +12,7 @@ const pxtoremPlugin = require('postcss-pxtorem');
 const safeAreaInsetPlugin = require('postcss-safe-area-inset')
 const autoprefixer = require('autoprefixer');
 const { SAAS_CONFIG } = require('../util/const');
+
 // 获取sass.config.js themes配置
 let themes = get(SAAS_CONFIG, 'webpack.themes', {});
 // 获取sass.config.js 端配置
@@ -26,7 +27,7 @@ const getPostcssConfig = () => {
     ],
   };
   // H5/app postcss配置：屏幕适配
-  sat !== 'pc' && postcssOptions.plugins.push(
+  /h5/.test(sat) && postcssOptions.plugins.push(
     pxtoremPlugin({
       rootValue: 100,
       propList: ['*'],
@@ -44,39 +45,33 @@ module.exports = function (config, argv) {
   const postcssOptions = getPostcssConfig();
 
   const styleModuleRule = [{
-      test: /\.css$/,
-      use: ExtractTextPlugin.extract({
-        use: [{
-          loader: require.resolve('css-loader'),
-        }, {
-          loader: require.resolve('postcss-loader'),
-          options: postcssOptions,
-        }],
-      })
-    },
-    {
-      test: /\.less$/,
-      use: ExtractTextPlugin.extract({
-        use: [{
-          loader: require.resolve('css-loader'),
-        }, {
-          loader: require.resolve('postcss-loader'),
-          options: postcssOptions,
-        }, {
-          loader: require.resolve('less-loader'),
-          options: {
-            sourceMap: true,
-            modifyVars: themes,
-          },
-        }]
-      })
-    },
-  ];
+    test: /\.css$/,
+    use: [{
+      loader: require.resolve('style-loader'),
+    }, {
+      loader: require.resolve('css-loader'),
+    }, {
+      loader: require.resolve('postcss-loader'),
+      options: postcssOptions,
+    }],
+  },
+  {
+    test: /\.less$/,
+    use: [{
+      loader: require.resolve('style-loader'),
+    }, {
+      loader: require.resolve('css-loader'),
+    }, {
+      loader: require.resolve('postcss-loader'),
+      options: postcssOptions,
+    }, {
+      loader: require.resolve('less-loader'),
+      options: {
+        sourceMap: true,
+        modifyVars: themes,
+      },
+    }],
+  }];
 
   config.module.rules = config.module.rules.concat(styleModuleRule);
-  config.plugins.push(new ExtractTextPlugin({
-    filename: '[name].css',
-    disable: false,
-    allChunks: true,
-  }));
 };

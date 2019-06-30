@@ -16,20 +16,18 @@ module.exports = function (config, argv) {
     //每个页面的index.jsx入口文件
     let jsEntryFile = path.join(SRC_PATH, chunkName, 'index');
     let commonEntryFile = path.join(SRC_PATH, 'common/index');
-
-    // development下使用热更新
-    if (process.env.NODE_ENV === 'development') {
-      entryValue.push(hotMiddlewareScript, commonEntryFile, jsEntryFile);
-    } else {
-      entryValue.push(commonEntryFile, jsEntryFile);
-    }
+  
+    entryValue.push(commonEntryFile, jsEntryFile);
     // merge plugin entry
     entryValue = entryValue.concat(resolveEntry);
-    
-    // console.log('entryValue');
-    // console.log(entryValue);
     entries[chunkName] = entryValue;
   })
+
+  // add portal entry for spa
+  entries.portal = path.join(SRC_PATH, 'portal/index');
+
+  // console.log('entry:');
+  // console.log(entries);
 
   config.entry = entries;
 }

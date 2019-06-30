@@ -50,6 +50,7 @@ module.exports = function (config) {
             libraryName: 'antd',
             style: true,
           }, 'antd'],
+          resolve('babel-plugin-syntax-dynamic-import'),
         ],
       }
     }

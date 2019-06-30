@@ -8,8 +8,8 @@ const applyBabelConfig = require('./config/babel');
 const applyHtmlConfig = require('./config/html');
 const applyImageConfig = require('./config/image');
 const applyStyleConfig = require('./config/style');
-const applyExternalConfig = require('./config/externals');
-const applyOptimizationConfig = require('./config/optimization');
+// const applyExternalConfig = require('./config/externals');
+// const applyOptimizationConfig = require('./config/optimization');
 const applyDebugConfig = require('./config/debug');
 const resolveAppConfig = require('./util/resolveAppConfig');
 
@@ -30,9 +30,9 @@ applyImageConfig(baseConfig);
 // css样式
 applyStyleConfig(baseConfig);
 // 外部引用类库
-applyExternalConfig(baseConfig);
+// applyExternalConfig(baseConfig);
 // optimizationConfig
-applyOptimizationConfig(baseConfig);
+// applyOptimizationConfig(baseConfig);
 // 调试选项
 applyDebugConfig(baseConfig);
 

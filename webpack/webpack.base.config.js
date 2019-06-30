@@ -7,10 +7,10 @@ module.exports = function () {
     mode: "production",
     entry: {},
     output: {
-      publicPath: '',
       path: BUILD_PATH,
       filename: '[name].js',
-      sourceMapFilename: '[file].map'
+      libraryTarget: 'umd',
+      library: 'singleApp',
     },
     module: {},
     plugins: []

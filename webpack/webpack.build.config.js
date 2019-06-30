@@ -8,9 +8,10 @@ const applyBabelConfig = require('./config/babel');
 const applyHtmlConfig = require('./config/html');
 const applyImageConfig = require('./config/image');
 const applyStyleConfig = require('./config/style');
-const applyExternalConfig = require('./config/externals');
-const applyOptimizationConfig = require('./config/optimization');
+// const applyExternalConfig = require('./config/externals');
+// const applyOptimizationConfig = require('./config/optimization');
 const applyUflifyConfig = require('./config/uglify');
+const applyOtherConfig = require('./config/other');
 const resolveAppConfig = require('./util/resolveAppConfig');
 
 // webpack 基础配置
@@ -30,11 +31,13 @@ applyImageConfig(baseConfig);
 // css样式
 applyStyleConfig(baseConfig);
 // 外部引用类库
-applyExternalConfig(baseConfig);
+// applyExternalConfig(baseConfig);
 // common文件
-applyOptimizationConfig(baseConfig);
+// applyOptimizationConfig(baseConfig);
 // uglify
-applyUflifyConfig(baseConfig);
+// applyUflifyConfig(baseConfig);
+// other
+// applyOtherConfig(baseConfig);
 
 // 业务自定义配置
 baseConfig = resolveAppConfig(baseConfig);
