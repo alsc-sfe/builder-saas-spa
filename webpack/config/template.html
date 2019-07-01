@@ -1,5 +1,5 @@
 <%
-  const { title, chunkName, spmb, heads, bodies, env, assets_url } = htmlWebpackPlugin.options
+  const { title, chunkName, spmb, heads, bodies, env, assets_url, pages } = htmlWebpackPlugin.options
   const common = htmlWebpackPlugin.files.chunks.common
   const chunk = htmlWebpackPlugin.files.chunks[chunkName]
   const commonCSS = common && common.css[0]
@@ -13,6 +13,7 @@
 %>
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
   <title><%- title %></title>
   <meta charset="utf-8" />
@@ -21,17 +22,91 @@
   <meta name="format-detection" content="telephone=no" />
   <meta name="format-detection" content="email=no" />
   <% for(let i = 0; i < heads.length; i++) { %>
-    <%= heads[i] %>
+  <%= heads[i] %>
   <% } %>
+  <link rel="preload" href="https://unpkg.com/single-spa@4.3.5/lib/umd/single-spa.min.js" as="script">
+  <link rel="preload" href="https://unpkg.com/systemjs@4.0.0/dist/system.js" as="script">
+  <!-- <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.production.min.js" as="script">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.production.min.js" as="script"> -->
   <script src="https://gw.alipayobjects.com/as/g/component/babel-polyfill/6.20.0/polyfill.min.js"></script>
-  <script src="https://gw.alipayobjects.com/os/lib/systemjs/0.20.19/dist/system.js"></script>
+  <script src="https://unpkg.com/single-spa@4.3.5/lib/umd/single-spa.min.js"></script>
+  <script src="https://unpkg.com/systemjs@4.0.0/dist/system.js"></script>
+  <!-- 声明依赖模块路径 -->
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "React": "https://unpkg.com/react@16.8.6/umd/react.development.js",
+        "ReactDOM": "https://unpkg.com/react-dom@16.8.6/umd/react-dom.development.js"
+      }
+    }
+  </script>
 </head>
-<body<% if (spmb) { %> data-aspm="<%= spmb %>"<% } %>>
+<body<% if (spmb) { %> data-aspm="<%= spmb %>" <% } %>>
   <!-- <%= JSON.stringify(htmlWebpackPlugin, null, 2) %> -->
-  <main></main>
+  <div class="microfe-layout">
+    <div class="microfe-navbar" id="navbar"></div>
+    <div class="microfe-body">
+      <div class="microfe-menu" id="menu"></div>
+      <div id="__microfe-root-content"></div>
+    </div>
+  </div>
   <% for(let i = 0; i < bodies.length; i++) { %>
-    <%= bodies[i] %>
+  <%= bodies[i] %>
   <% } %>
-  <script src="<%= assets_url %><%= portalJs %><%= version %>"></script>
+  <script>
+    (async function(){
+      var APP_MAP = <%= pages %>;
+      var React = (await System.import('React')).default;
+      var ReactDOM = (await System.import('ReactDOM')).default;
+
+      var elContent = document.querySelector('#__microfe-root-content');
+      function createOrGetContainer(id) {
+        var container = document.querySelector(id);
+        if (!container) {
+          container = document.createElement('div');
+          container.id = id;
+          elContent.appendChild(container);
+        }
+        return container;
+      }
+
+      function pathPrefix(prefix) {
+        return function() {
+          return window.location.hash.startsWith(prefix)
+        };
+      }
+
+      Object.keys(APP_MAP).forEach(name => {
+        var app = APP_MAP[name];
+        var container;
+        singleSpa.registerApplication(
+          name,
+          {
+            bootstrap: function() {
+              container = createOrGetContainer(app.container || '#__microfe-react-content');
+              return Promise.resolve();
+            },
+            mount: async function() {
+              var component = (await System.import('./' + app.js)).default;
+
+              ReactDOM.render(
+                React.createElement(component),
+                container,
+              );
+              return Promise.resolve();
+            },
+            unmount: function() {
+              ReactDOM.unmountComponentAtNode(container);
+              return Promise.resolve();
+            },
+          },
+          pathPrefix('#' + app.route),
+        );
+      });
+
+      singleSpa.start();
+    })()
+  </script>
 </body>
+
 </html>

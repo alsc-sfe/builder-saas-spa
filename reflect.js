@@ -15,8 +15,6 @@ module.exports = function (app, opts) {
 
   let webpackConfig = webpackDevConfig;
 
-  // console.log(webpackConfig);
-
   let param = {
     publicPath: webpackConfig.output.publicPath,
     noInfo: false,

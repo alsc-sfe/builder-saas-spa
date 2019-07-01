@@ -13,21 +13,16 @@ module.exports = function (config, argv) {
   let htmlWebpackPlugins = [];
   let pages = SAAS_CONFIG.page;
 
-  Object.keys(pages).forEach(chunkName => {
-    const { title = '', spmb = '', heads = [], bodies = [] } = pages[chunkName];
-    htmlWebpackPlugins.push(new HtmlWebpackPlugin({
-      inject: false,
-      template: require.resolve('./template.html'),
-      filename: `${chunkName}.html`,
-      title,
-      chunkName,
-      spmb: spmb || '',
-      heads: resolveHeads.concat(heads),
-      bodies: resolveBodies.concat(bodies),
-      assets_url: ASSETS_URL,
-      env: process.env.NODE_ENV || 'production',
-    }));
-  })
+  htmlWebpackPlugins.push(new HtmlWebpackPlugin({
+    inject: false,
+    template: require.resolve('./template.html'),
+    filename: 'index.html',
+    pages: JSON.stringify(pages),
+    heads: resolveHeads,
+    bodies: resolveBodies,
+    assets_url: ASSETS_URL,
+    env: process.env.NODE_ENV || 'production',
+  }));
 
   config.plugins = config.plugins.concat(htmlWebpackPlugins);
 }

@@ -1,15 +1,15 @@
 /**
  * dev配置文件
  */
-process.env.NODE_ENV = 'production';
+// process.env.NODE_ENV = 'development';
 const applyEntryConfig = require('./config/entry');
 const applyResolveConfig = require('./config/resolve');
 const applyBabelConfig = require('./config/babel');
 const applyHtmlConfig = require('./config/html');
 const applyImageConfig = require('./config/image');
 const applyStyleConfig = require('./config/style');
-// const applyExternalConfig = require('./config/externals');
-// const applyOptimizationConfig = require('./config/optimization');
+const applyExternalConfig = require('./config/externals');
+const applyOptimizationConfig = require('./config/optimization');
 const applyUflifyConfig = require('./config/uglify');
 const applyOtherConfig = require('./config/other');
 const resolveAppConfig = require('./util/resolveAppConfig');
@@ -31,13 +31,13 @@ applyImageConfig(baseConfig);
 // css样式
 applyStyleConfig(baseConfig);
 // 外部引用类库
-// applyExternalConfig(baseConfig);
+applyExternalConfig(baseConfig);
 // common文件
 // applyOptimizationConfig(baseConfig);
 // uglify
 // applyUflifyConfig(baseConfig);
 // other
-// applyOtherConfig(baseConfig);
+applyOtherConfig(baseConfig);
 
 // 业务自定义配置
 baseConfig = resolveAppConfig(baseConfig);

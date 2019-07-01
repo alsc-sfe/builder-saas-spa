@@ -22,7 +22,7 @@ module.exports = function(config) {
   config.plugins.push(new ProgressBarPlugin());
   // chunk分析
   analyze && config.plugins.push(new BundleAnalyzerPlugin());
-  config.devtool = 'source-map';
+  // config.devtool = 'source-map';
 
   // set devServer
   // config.devServer = {

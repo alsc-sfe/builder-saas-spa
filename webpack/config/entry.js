@@ -23,9 +23,6 @@ module.exports = function (config, argv) {
     entries[chunkName] = entryValue;
   })
 
-  // add portal entry for spa
-  entries.portal = path.join(SRC_PATH, 'portal/index');
-
   // console.log('entry:');
   // console.log(entries);
 
