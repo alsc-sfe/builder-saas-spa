@@ -87,7 +87,8 @@
               return Promise.resolve();
             },
             mount: async function() {
-              var component = (await System.import('./' + app.js)).default;
+              var jsEntry = app.entry.replace('/src', '');
+              var component = (await System.import(jsEntry)).default;
 
               ReactDOM.render(
                 React.createElement(component),
