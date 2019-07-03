@@ -1,21 +1,11 @@
 <%
-  const { title, chunkName, spmb, heads, bodies, env, assets_url, pages } = htmlWebpackPlugin.options
-  const common = htmlWebpackPlugin.files.chunks.common
-  const chunk = htmlWebpackPlugin.files.chunks[chunkName]
-  const commonCSS = common && common.css[0]
-  const commonJS = common && common.entry
+  const { assets_url, heads, bodies, pages } = htmlWebpackPlugin.options
   const version = '?v=' + (+ new Date())
-  const chunkCSS = chunk && chunk.css[0]
-  const chunkJS = chunk && chunk.entry
-
-  const portalChunk = htmlWebpackPlugin.files.chunks.portal
-  const portalJs = portalChunk && portalChunk.entry
 %>
 <!DOCTYPE html>
 <html lang="zh">
 
 <head>
-  <title><%- title %></title>
   <meta charset="utf-8" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -24,31 +14,48 @@
   <% for(let i = 0; i < heads.length; i++) { %>
   <%= heads[i] %>
   <% } %>
-  <link rel="preload" href="https://unpkg.com/single-spa@4.3.5/lib/umd/single-spa.min.js" as="script">
-  <link rel="preload" href="https://unpkg.com/systemjs@4.0.0/dist/system.js" as="script">
-  <!-- <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.production.min.js" as="script">
-  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.production.min.js" as="script"> -->
   <script src="https://gw.alipayobjects.com/as/g/component/babel-polyfill/6.20.0/polyfill.min.js"></script>
   <script src="https://unpkg.com/single-spa@4.3.5/lib/umd/single-spa.min.js"></script>
-  <script src="https://unpkg.com/systemjs@4.0.0/dist/system.js"></script>
+  <script src="https://gw.alipayobjects.com/os/lib/systemjs/4.0.0/dist/system.js"></script>
   <!-- 声明依赖模块路径 -->
   <script type="systemjs-importmap">
     {
       "imports": {
-        "React": "https://unpkg.com/react@16.8.6/umd/react.development.js",
-        "ReactDOM": "https://unpkg.com/react-dom@16.8.6/umd/react-dom.development.js"
+        "React": "https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js",
+        "ReactDOM": "https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js"
       }
     }
   </script>
 </head>
-<body<% if (spmb) { %> data-aspm="<%= spmb %>" <% } %>>
+<body>
   <!-- <%= JSON.stringify(htmlWebpackPlugin, null, 2) %> -->
-  <div class="microfe-layout">
-    <div class="microfe-navbar" id="navbar"></div>
-    <div class="microfe-body">
-      <div class="microfe-menu" id="menu"></div>
-      <div id="__microfe-root-content"></div>
+  <div class="__microfe-layout">
+    <div class="__microfe-nav" id="__microfe-nav"></div>
+    <div class="__microfe-body">
+      <div class="__microfe-menu" id="__microfe-menu"></div>
+      <div class="__microfe-main" id="__microfe-main"></div>
     </div>
+    <style>
+      body, html, p {
+        margin: 0;
+        padding: 0;
+      }
+      body, html {
+        height: 100%;
+      }
+      .__microfe-layout {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      .__microfe-body {
+        flex: 1;
+        display: flex;
+      }
+      .__microfe-main {
+        flex: 1;
+      }
+    </style>
   </div>
   <% for(let i = 0; i < bodies.length; i++) { %>
   <%= bodies[i] %>
@@ -56,6 +63,7 @@
   <script>
     (async function(){
       var APP_MAP = <%= pages %>;
+      var assets_url = "<%= assets_url %>";
       var React = (await System.import('React')).default;
       var ReactDOM = (await System.import('ReactDOM')).default;
 
@@ -76,33 +84,78 @@
         };
       }
 
-      Object.keys(APP_MAP).forEach(name => {
-        var app = APP_MAP[name];
-        var container;
-        singleSpa.registerApplication(
-          name,
-          {
+      function getLayoutAssets() {
+        var hostname = window.location.hostname;
+        var layoutAssets = {
+          header: 'https://g-assets.daily.taobao.net/SaasAppGroup/webappTest/1.0.0/header.js',
+          menu: {
+            boh: 'https://g-assets.daily.taobao.net/SaasAppGroup/webappTest/1.0.0/boh-menu.js',
+            crm: 'https://g-assets.daily.taobao.net/SaasAppGroup/webappTest/1.0.0/crm-menu.js',
+          },
+        };
+        // var layoutAssets = {
+        //   header: './header.js',
+        //   menu: {
+        //     boh: './boh-menu.js',
+        //     crm: './crm-menu.js',
+        //   },
+        // };
+        return layoutAssets;
+      }
+
+      var layoutAssets = getLayoutAssets();
+
+      function registerApp(appName, app) {
+        var _navContainer;
+        var _menuContainer;
+        var _mainContainer;
+        singleSpa.registerApplication(appName, {
             bootstrap: function() {
-              container = createOrGetContainer(app.container || '#__microfe-react-content');
+              _navContainer = createOrGetContainer('#__microfe-nav');
+              _menuContainer = createOrGetContainer('#__microfe-menu');
+              _mainContainer = createOrGetContainer(app.container || '#__microfe-main');
               return Promise.resolve();
             },
             mount: async function() {
-              var jsEntry = app.entry.replace('/src', '');
-              var component = (await System.import(jsEntry)).default;
+              if (app.header) {
+                var _navComponent = (await System.import(layoutAssets.header)).default;
+                app.header && ReactDOM.render(
+                  React.createElement(_navComponent),
+                  _navContainer,
+                );
+              }
 
-              ReactDOM.render(
-                React.createElement(component),
-                container,
-              );
+              if (app.menu) {
+                var _menuComponent = (await System.import(layoutAssets.menu[app.menu])).default;
+                ReactDOM.render(
+                  React.createElement(_menuComponent),
+                  _menuContainer,
+                );
+              }
+
+              if (appName) {
+                var _mainComponent = (await System.import(assets_url + appName + '.js')).default;
+                ReactDOM.render(
+                  React.createElement(_mainComponent),
+                  _mainContainer,
+                );
+              }
               return Promise.resolve();
             },
             unmount: function() {
-              ReactDOM.unmountComponentAtNode(container);
+              ReactDOM.unmountComponentAtNode(_navContainer);
+              ReactDOM.unmountComponentAtNode(_menuContainer);
+              ReactDOM.unmountComponentAtNode(_mainContainer);
               return Promise.resolve();
             },
           },
           pathPrefix('#' + app.route),
         );
+      }
+
+      // 注册APP
+      Object.keys(APP_MAP).forEach(appName => {
+        registerApp(appName, APP_MAP[appName]);
       });
 
       singleSpa.start();
