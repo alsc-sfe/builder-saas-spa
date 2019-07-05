@@ -1,7 +1,7 @@
 /**
  * dev配置文件
  */
-// process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = 'development';
 const applyEntryConfig = require('./config/entry');
 const applyResolveConfig = require('./config/resolve');
 const applyBabelConfig = require('./config/babel');

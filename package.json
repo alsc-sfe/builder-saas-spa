@@ -1,6 +1,6 @@
 {
   "name": "@ali/builder-saas-spa",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "The DEF Koubei Saas builder",
   "scripts": {},
   "repository": {
@@ -20,6 +20,7 @@
     "saas"
   ],
   "dependencies": {
+    "@ali/saas-webpack-system-module": "1",
     "@babel/core": "7",
     "@babel/plugin-proposal-class-properties": "7",
     "@babel/plugin-proposal-decorators": "7",

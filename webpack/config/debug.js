@@ -12,6 +12,8 @@ const analyze = get(SAAS_CONFIG, 'webpack.analyze', false);
 module.exports = function(config) {
   // set mode
   config.mode = 'development';
+  config.devtool = 'source-map';
+
   config.plugins = config.plugins || [];
   config.devServer = config.devServer || {};
 
@@ -22,7 +24,6 @@ module.exports = function(config) {
   config.plugins.push(new ProgressBarPlugin());
   // chunk分析
   analyze && config.plugins.push(new BundleAnalyzerPlugin());
-  // config.devtool = 'source-map';
 
   // set devServer
   // config.devServer = {

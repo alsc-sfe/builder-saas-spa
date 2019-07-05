@@ -18,13 +18,14 @@ module.exports = function (config, argv) {
     let commonEntryFile = path.join(SRC_PATH, 'common/index');
   
     entryValue.push(commonEntryFile, jsEntryFile);
+    // process.env.NODE_ENV === 'development' && entryValue.push(hotMiddlewareScript);
     // merge plugin entry
     entryValue = entryValue.concat(resolveEntry);
     entries[chunkName] = entryValue;
   })
 
-  console.log('entry:');
-  console.log(entries);
+  // console.log('entry:');
+  // console.log(entries);
 
   config.entry = entries;
 }

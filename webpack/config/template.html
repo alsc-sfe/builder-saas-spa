@@ -1,5 +1,5 @@
 <%
-  const { assets_url, heads, bodies, pages } = htmlWebpackPlugin.options
+  const { assets_url, heads, bodies, pages, debug } = htmlWebpackPlugin.options
   const version = '?v=' + (+ new Date())
 %>
 <!DOCTYPE html>
@@ -14,15 +14,17 @@
   <% for(let i = 0; i < heads.length; i++) { %>
   <%= heads[i] %>
   <% } %>
+  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.production.min.js" as="script">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.production.min.js" as="script">
   <script src="https://gw.alipayobjects.com/as/g/component/babel-polyfill/6.20.0/polyfill.min.js"></script>
-  <script src="https://unpkg.com/single-spa@4.3.5/lib/umd/single-spa.min.js"></script>
-  <script src="https://gw.alipayobjects.com/os/lib/systemjs/4.0.0/dist/system.js"></script>
+  <script src="https://gw.alipayobjects.com/os/lib/single-spa/4.3.5/lib/umd/single-spa.min.js"></script>
+  <script src="https://gw.alipayobjects.com/os/lib/systemjs/4.0.0/dist/system.min.js"></script>
   <!-- 声明依赖模块路径 -->
   <script type="systemjs-importmap">
     {
       "imports": {
-        "React": "https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js",
-        "ReactDOM": "https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js"
+        "React": "https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.production.min.js",
+        "ReactDOM": "https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.production.min.js"
       }
     }
   </script>
@@ -86,6 +88,15 @@
 
       function getLayoutAssets() {
         var hostname = window.location.hostname;
+        <% if (debug) { %>
+        var layoutAssets = {
+          header: './header.js',
+          menu: {
+            boh: './boh-menu.js',
+            crm: './crm-menu.js',
+          },
+        };
+        <% } else { %>
         var layoutAssets = {
           header: 'https://g-assets.daily.taobao.net/SaasAppGroup/webappTest/1.0.0/header.js',
           menu: {
@@ -93,13 +104,7 @@
             crm: 'https://g-assets.daily.taobao.net/SaasAppGroup/webappTest/1.0.0/crm-menu.js',
           },
         };
-        // var layoutAssets = {
-        //   header: './header.js',
-        //   menu: {
-        //     boh: './boh-menu.js',
-        //     crm: './crm-menu.js',
-        //   },
-        // };
+        <% } %>
         return layoutAssets;
       }
 
@@ -119,7 +124,7 @@
             mount: async function() {
               if (app.header) {
                 var _navComponent = (await System.import(layoutAssets.header)).default;
-                app.header && ReactDOM.render(
+                ReactDOM.render(
                   React.createElement(_navComponent),
                   _navContainer,
                 );

@@ -12,12 +12,14 @@ module.exports = function (config, argv) {
 
   let htmlWebpackPlugins = [];
   let pages = SAAS_CONFIG.page;
+  let debug = SAAS_CONFIG.debug || false;
 
   htmlWebpackPlugins.push(new HtmlWebpackPlugin({
     inject: false,
     template: require.resolve('./template.html'),
     filename: 'index.html',
     pages: JSON.stringify(pages),
+    debug: debug,
     heads: resolveHeads,
     bodies: resolveBodies,
     assets_url: ASSETS_URL,
