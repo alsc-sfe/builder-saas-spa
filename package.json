@@ -61,6 +61,8 @@
     "webpack-system-register": "^1.6.0",
     "yargs-parser": "13"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-plugin-react-css-modules": "^5.2.6"
+  },
   "readmeFilename": "README.md"
 }
