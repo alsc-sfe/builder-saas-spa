@@ -34,6 +34,7 @@
     "autoprefixer": "7",
     "babel-loader": "8",
     "babel-plugin-import": "1",
+    "babel-plugin-react-css-modules": "^5.2.6",
     "babel-plugin-syntax-dynamic-import": "6",
     "chalk": "2",
     "clean-webpack-plugin": "0",
@@ -45,6 +46,7 @@
     "less-loader": "4",
     "lodash": "4",
     "optimize-css-assets-webpack-plugin": "5",
+    "postcss-less": "^3.1.4",
     "postcss-loader": "3",
     "postcss-pxtorem": "4",
     "postcss-safe-area-inset": "1",
@@ -60,9 +62,6 @@
     "webpack-hot-middleware": "2",
     "webpack-system-register": "^1.6.0",
     "yargs-parser": "13"
-  },
-  "devDependencies": {
-    "babel-plugin-react-css-modules": "^5.2.6"
   },
   "readmeFilename": "README.md"
 }

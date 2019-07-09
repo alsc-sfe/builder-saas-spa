@@ -11,7 +11,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const pxtoremPlugin = require('postcss-pxtorem');
 const safeAreaInsetPlugin = require('postcss-safe-area-inset')
 const autoprefixer = require('autoprefixer');
-const { SAAS_CONFIG, CSS_SCOPE } = require('../util/const');
+const { SAAS_CONFIG, CSS_SCOPE, ROOT_PATH } = require('../util/const');
 
 // 获取sass.config.js themes配置
 let themes = get(SAAS_CONFIG, 'webpack.themes', {});
@@ -20,10 +20,11 @@ let sat = SAAS_CONFIG.sat || 'pc';
 
 const getPostcssConfig = () => {
   const postcssOptions = {
+    sourceMap: true,
     plugins: [
       autoprefixer({
         browsers: ['last 2 versions', 'Firefox ESR', '> 1%', 'ie >= 8', 'iOS >= 8', 'Android >= 4'],
-      }),
+      })
     ],
   };
   // H5/app postcss配置：屏幕适配
@@ -44,10 +45,11 @@ module.exports = function (config, argv) {
 
   const postcssOptions = getPostcssConfig();
 
-  const cssConfig = {
+  const cssOptions = {
     modules: true,
     localIdentName: `${CSS_SCOPE}_[path][local]_[hash:base64:5]`,
-    context: 'src'
+    context: 'src',
+    sourceMap: true
   }
 
   const styleModuleRule = [{
@@ -56,7 +58,6 @@ module.exports = function (config, argv) {
       loader: require.resolve('style-loader'),
     }, {
       loader: require.resolve('css-loader'),
-      options: cssConfig
     }, {
       loader: require.resolve('postcss-loader'),
       options: postcssOptions,
@@ -64,23 +65,42 @@ module.exports = function (config, argv) {
   },
   {
     test: /\.less$/,
+    exclude: path.resolve(ROOT_PATH, 'node_modules/'),
     use: [{
       loader: require.resolve('style-loader'),
     }, {
       loader: require.resolve('css-loader'),
-      options: cssConfig
+      options: cssOptions
     }, {
       loader: require.resolve('postcss-loader'),
       options: postcssOptions,
-    }, {
+    }, 
+    {
       loader: require.resolve('less-loader'),
       options: {
         sourceMap: true,
         modifyVars: themes,
       },
-    }],
+    }
+  ]
+  },
+  {
+    test: /\.less$/,
+    include: path.resolve(ROOT_PATH, 'node_modules/'),
+    use: [{
+      loader: require.resolve('style-loader'),
+    }, {
+      loader: require.resolve('css-loader'),
+    }, 
+    {
+      loader: require.resolve('less-loader'),
+      options: {
+        sourceMap: true,
+        modifyVars: themes,
+      },
+    }]
   }
-  ];
+];
 
   config.module.rules = config.module.rules.concat(styleModuleRule);
 };
