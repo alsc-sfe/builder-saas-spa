@@ -54,6 +54,7 @@ module.exports = function (config, argv) {
 
   const styleModuleRule = [{
     test: /\.css$/,
+    exclude: path.resolve(ROOT_PATH, 'src/'),
     use: [{
       loader: require.resolve('style-loader'),
     }, {
