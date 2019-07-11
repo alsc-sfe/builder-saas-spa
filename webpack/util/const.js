@@ -29,6 +29,9 @@ if (BUILD_ENV === 'cloud') {
   ASSETS_URL = url(CDN_BASE, BUILD_GIT_GROUP, BUILD_GIT_PROJECT, BUILD_GIT_VERSION, '/');
 }
 
+// CSS MODULE NAMESPACE
+let CSS_SCOPE = ROOT_PATH.split('/').pop().split('-').pop();
+
 const PATH_PARAMS = {
   ROOT_PATH,
   SRC_PATH,
@@ -36,6 +39,7 @@ const PATH_PARAMS = {
   CDN_BASE,
   ASSETS_URL,
   SAAS_CONFIG,
+  CSS_SCOPE
 };
 
 // console.log('PATH_PARAMS:');

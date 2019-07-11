@@ -1,10 +1,13 @@
 'use strict';
 const { resolve } = require;
+const { CSS_SCOPE } = require('../util/const');
+
 
 module.exports = function (config) {
 
   config.module = config.module || {};
   config.module.rules = config.module.rules || [];
+
 
   let babelModuleRule = {
     test: /\.js|jsx$/,
@@ -51,6 +54,16 @@ module.exports = function (config) {
             style: true,
           }, 'antd'],
           resolve('babel-plugin-syntax-dynamic-import'),
+          [resolve('babel-plugin-react-css-modules'),{
+            context: 'src',
+            generateScopedName: `${CSS_SCOPE}_[path][local]_[hash:base64:5]`,
+            webpackHotModuleReloading: true,
+            filetypes: {
+              ".less": {
+                "syntax": "postcss-less"
+              }
+            }
+          }]
         ],
       }
     }
