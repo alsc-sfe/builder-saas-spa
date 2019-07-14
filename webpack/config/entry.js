@@ -1,31 +1,30 @@
 'use strict';
 
 const path = require('path');
-const { SRC_PATH, SAAS_CONFIG } = require('../util/const');
-const plugins = require('../util/resolvePlugins')();
-const { resolveEntry } = plugins;
+const fs = require('fs');
+const get = require('lodash/get');
+const nunjucks = require('nunjucks');
+const { SRC_PATH, SAAS_CONFIG, ROOT_PATH } = require('../util/const');
+const { name: appName } = require(path.join(ROOT_PATH, 'package.json'));
+
+nunjucks.configure('*', {
+  autoescape: false,
+});
 
 module.exports = function (config, argv) {
   let entries = config.entry || {};
   let hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
-  let pages = SAAS_CONFIG.page;
+  const pages = get(SAAS_CONFIG, 'page', {});
+  fs.writeFileSync(
+    path.join(SRC_PATH, '__micro_app_config.js'),
+    nunjucks.renderString(fs.readFileSync(path.join(__dirname, '../dynamic/__micro_app_config.es')).toString(), {
+      appName,
+      pages: JSON.stringify(pages),
+      path: SRC_PATH,
+    }),
+  );
 
-  Object.keys(pages).forEach(chunkName => {
-    let entryValue = [];
-
-    //每个页面的index.jsx入口文件
-    let jsEntryFile = path.join(SRC_PATH, chunkName, 'index');
-    let commonEntryFile = path.join(SRC_PATH, 'common/index');
-  
-    entryValue.push(commonEntryFile, jsEntryFile);
-    // process.env.NODE_ENV === 'development' && entryValue.push(hotMiddlewareScript);
-    // merge plugin entry
-    entryValue = entryValue.concat(resolveEntry);
-    entries[chunkName] = entryValue;
-  })
-
-  console.log('entry:');
-  console.log(entries);
-
+  // micro app config file
+  entries['app-config'] = path.join(SRC_PATH, '__micro_app_config.js');
   config.entry = entries;
 }

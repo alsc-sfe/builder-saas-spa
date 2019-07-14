@@ -12,7 +12,6 @@ let webpackHotMiddleware;
 let compiler;
 
 module.exports = function (app, opts) {
-
   let webpackConfig = webpackDevConfig;
 
   let param = {
