@@ -11,6 +11,7 @@ module.exports = function () {
       path: BUILD_PATH,
       filename: '[name].js',
       libraryTarget: 'system',
+      chunkFilename: '[name].chunk.js'
     },
     module: {
       rules: [

@@ -71,7 +71,7 @@ module.exports = function (config, argv) {
       loader: require.resolve('style-loader'),
     }, {
       loader: require.resolve('css-loader'),
-      options: cssOptions
+      // options: cssOptions
     }, {
       loader: require.resolve('postcss-loader'),
       options: postcssOptions,

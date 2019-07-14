@@ -1,6 +1,6 @@
 {
   "name": "@ali/builder-saas-spa",
-  "version": "1.0.9",
+  "version": "1.0.12",
   "description": "The DEF Koubei Saas builder",
   "scripts": {},
   "repository": {
@@ -47,6 +47,7 @@
     "less": "^2.7.3",
     "less-loader": "4",
     "lodash": "4",
+    "nunjucks": "^3.2.0",
     "optimize-css-assets-webpack-plugin": "5",
     "postcss-less": "^3.1.4",
     "postcss-loader": "3",
