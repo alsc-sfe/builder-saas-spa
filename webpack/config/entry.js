@@ -24,8 +24,8 @@ module.exports = function (config, argv) {
     entries[chunkName] = entryValue;
   })
 
-  // console.log('entry:');
-  // console.log(entries);
+  console.log('entry:');
+  console.log(entries);
 
   config.entry = entries;
 }
