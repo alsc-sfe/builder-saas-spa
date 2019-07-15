@@ -20,7 +20,6 @@ module.exports = function (config, argv) {
     nunjucks.renderString(fs.readFileSync(path.join(__dirname, '../dynamic/__micro_app_config.es')).toString(), {
       appName,
       pages: JSON.stringify(pages),
-      path: SRC_PATH,
     }),
   );
 

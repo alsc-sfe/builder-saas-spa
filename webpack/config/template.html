@@ -1,5 +1,5 @@
 <%
-  const { assets_url, heads, bodies, pages, debug } = htmlWebpackPlugin.options
+  const { assets_url, heads, bodies, pages, debug, appRoute } = htmlWebpackPlugin.options
   const version = '?v=' + (+ new Date())
 %>
 <!DOCTYPE html>
@@ -12,8 +12,13 @@
   <meta name="format-detection" content="telephone=no" />
   <meta name="format-detection" content="email=no" />
   <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/3.20.1/dist/antd.min.css">
-  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.production.min.js" as="script">
-  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.production.min.js" as="script">
+  
+  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/mini-app-loader/0.0.2/dist/mini-app-loader.system.js" as="script" crossorigin="anonymous">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js" as="script" crossorigin="anonymous">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js" as="script" crossorigin="anonymous">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/antd/3.20.1/dist/antd.min.js" as="script" crossorigin="anonymous">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/single-spa/4.3.5/lib/system/single-spa.min.js" as="script" crossorigin="anonymous">
+
   <script src="https://gw.alipayobjects.com/as/g/component/babel-polyfill/6.20.0/polyfill.min.js"></script>
   <script src="https://gw.alipayobjects.com/os/lib/systemjs/4.0.2/dist/system.min.js"></script>
   <script src="https://gw.alipayobjects.com/os/lib/moment/2.24.0/min/moment.min.js"></script>
@@ -21,7 +26,7 @@
   <script type="systemjs-importmap">
     {
       "imports": {
-        "MiniAppLoader": "https://gw.alipayobjects.com/os/lib/ali/mini-app-loader/0.0.1/dist/mini-app-loader.system.js",
+        "MiniAppLoader": "https://gw.alipayobjects.com/os/lib/ali/mini-app-loader/0.0.2/dist/mini-app-loader.system.js",
         "React": "https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js",
         "ReactDOM": "https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js",
         "antd": "https://gw.alipayobjects.com/os/lib/antd/3.20.1/dist/antd.min.js",
@@ -50,18 +55,21 @@
   </style>
 </head>
 <body>
+  <!-- <%= JSON.stringify(htmlWebpackPlugin, null, 2) %> -->
   <script>
     (async function() {
       const MiniAppLoader = (await System.import('MiniAppLoader')).default;
+      await System.import('React');
+      await System.import('ReactDOM');
 
       MiniAppLoader.start({
         // 初始html骨架
         skeleton: {
           html: `
             <div class="microfe-layout">
-              <div class="microfe-navbar" id="common__navbar"></div>
+              <div class="microfe-navbar" id="bcommon__navbar"></div>
               <div class="microfe-body">
-                <div class="microfe-menu" id="common__menu"></div>
+                <div class="microfe-menu" id="bcommon__menu"></div>
                 <div id="__microfe-root-content"></div>
               </div>
             </div>
@@ -82,10 +90,9 @@
         },
         // 微应用列表，微应用名称和版本(或路径)
         apps: {
-          common: './app-config.js',
+          <%- appRoute %>: './app-config.js',
         },
       });
-
     }());
   </script>
 </body>

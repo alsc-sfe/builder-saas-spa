@@ -1,6 +1,5 @@
 const appName = '{{ appName }}';
 const pages = JSON.parse('{{ pages }}');
-const path = '{{ path }}';
 
 const pageList = [];
 Object.keys(pages).forEach(item => {
