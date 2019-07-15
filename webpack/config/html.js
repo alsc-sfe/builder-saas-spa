@@ -14,7 +14,8 @@ module.exports = function (config, argv) {
   let htmlWebpackPlugins = [];
   let pages = get(SAAS_CONFIG, 'page', {});
   let debug = get(SAAS_CONFIG, 'debug', false);
-  let appRoute = get(SAAS_CONFIG, 'microConfig.appRoute', 'local');
+  let appRoute = get(SAAS_CONFIG, 'microConfig.appRoute', '');
+  appRoute = appRoute ? appRoute : 'local';
 
   htmlWebpackPlugins.push(new HtmlWebpackPlugin({
     inject: false,
