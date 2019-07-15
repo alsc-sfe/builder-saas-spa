@@ -6,7 +6,7 @@ const ROOT_PATH = require('../util/const').ROOT_PATH;
 module.exports = function (config) {
   config.resolve = config.resolve || {};
 
-  config.resolve.extensions = ['.js', '.jsx', '.less'];
+  config.resolve.extensions = ['.js', '.jsx', '.less', '.ts', '.tsx'];
 
   const mPath = [
     'node_modules',

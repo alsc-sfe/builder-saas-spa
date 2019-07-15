@@ -6,7 +6,6 @@
 
 const path = require('path');
 const get = require('lodash/get');
-const saasConfig = require(path.join(process.cwd(), 'saas.config.js'));
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const pxtoremPlugin = require('postcss-pxtorem');
 const safeAreaInsetPlugin = require('postcss-safe-area-inset')
