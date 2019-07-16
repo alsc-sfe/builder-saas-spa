@@ -5,7 +5,7 @@ const pageList = [];
 Object.keys(pages).forEach(item => {
   if (item !== 'common') {
     pageList.push({
-      pageName: item,
+      miniAppName: item,
       getComponent: () => import(/* webpackChunkName: "[request]" */`./${item}`),
       route: pages[item].route,
     });
