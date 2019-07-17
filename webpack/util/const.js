@@ -22,7 +22,7 @@ if (argv.def_publish_env === 'daily') {
   CDN_BASE = '//g-assets.daily.taobao.net/';
 }
 
-let ASSETS_URL = './';
+let ASSETS_URL = '/';
 
 // 云构建时使用设置ASSETS_URL
 if (BUILD_ENV === 'cloud') {
@@ -42,7 +42,10 @@ const PATH_PARAMS = {
   CSS_SCOPE
 };
 
-// console.log('PATH_PARAMS:');
-// console.log(JSON.stringify(PATH_PARAMS, null, 2));
+console.log('PROCESS_ENV');
+console.log(JSON.stringify(process.env, null, 2));
+
+console.log('PATH_PARAMS:');
+console.log(JSON.stringify(PATH_PARAMS, null, 2));
 
 module.exports = PATH_PARAMS;
