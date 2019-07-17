@@ -14,8 +14,8 @@ module.exports = function (config, argv) {
   let htmlWebpackPlugins = [];
   let pages = get(SAAS_CONFIG, 'page', {});
   let debug = get(SAAS_CONFIG, 'debug', false);
-  let appRoute = get(SAAS_CONFIG, 'microConfig.appRoute', '');
-  appRoute = appRoute ? appRoute : 'local';
+  let minAppName = get(SAAS_CONFIG, 'microConfig.minAppName', '');
+  minAppName = minAppName ? minAppName : 'local';
 
   htmlWebpackPlugins.push(new HtmlWebpackPlugin({
     inject: false,
@@ -26,7 +26,7 @@ module.exports = function (config, argv) {
     heads: resolveHeads,
     bodies: resolveBodies,
     assets_url: ASSETS_URL,
-    appRoute: appRoute,
+    minAppName: minAppName,
     env: process.env.NODE_ENV || 'production',
   }));
 
