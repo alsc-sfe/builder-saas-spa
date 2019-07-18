@@ -1,11 +1,11 @@
 const miniAppName = '{{ appName }}';
 const pages = JSON.parse('{{ pages }}');
 
-const pageList = [];
+const modules = [];
 Object.keys(pages).forEach(item => {
   if (item !== 'common') {
-    pageList.push({
-      pageName: item,
+    modules.push({
+      moduleName: item,
       getComponent: () => import(/* webpackChunkName: "[request]" */`./src/${item}`),
       route: pages[item].route,
     });
@@ -14,5 +14,5 @@ Object.keys(pages).forEach(item => {
 
 export default {
   miniAppName,
-  pageList,
+  modules,
 };
