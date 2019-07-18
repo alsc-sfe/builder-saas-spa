@@ -13,7 +13,7 @@
   <meta name="format-detection" content="email=no" />
   <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/3.20.1/dist/antd.min.css">
   
-  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/mini-app-loader/0.0.2/dist/mini-app-loader.system.js" as="script" crossorigin="anonymous">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/mini-app-loader/0.0.3-beta.17/dist/mini-app-loader-with-config.system.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/antd/3.20.1/dist/antd.min.js" as="script" crossorigin="anonymous">
@@ -26,7 +26,7 @@
   <script type="systemjs-importmap">
     {
       "imports": {
-        "MiniAppLoader": "https://gw.alipayobjects.com/os/lib/ali/mini-app-loader/0.0.2/dist/mini-app-loader.system.js",
+        "MiniAppLoader": "https://gw.alipayobjects.com/os/lib/ali/mini-app-loader/0.0.3-beta.17/dist/mini-app-loader-with-config.system.js",
         "React": "https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js",
         "ReactDOM": "https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js",
         "antd": "https://gw.alipayobjects.com/os/lib/antd/3.20.1/dist/antd.min.js",
@@ -56,42 +56,34 @@
 </head>
 <body>
   <!-- <%= JSON.stringify(htmlWebpackPlugin, null, 2) %> -->
+  <div class="microfe-layout">
+    <div class="microfe-navbar" id="<%- commonAppName %>__navbar"></div>
+    <div class="microfe-body">
+      <div class="microfe-menu" id="<%- commonAppName %>__menu"></div>
+      <div id="__microfe-root-content"></div>
+    </div>
+  </div>
   <script>
-    (async function() {
-      const MiniAppLoader = (await System.import('MiniAppLoader')).default;
+      (async function() {
+        const MiniAppLoader = (await System.import('MiniAppLoader')).default;
 
-      MiniAppLoader.start({
-        // 初始html骨架
-        skeleton: {
-          html: `
-            <div class="microfe-layout">
-              <div class="microfe-navbar" id="<%- commonAppName %>__navbar"></div>
-              <div class="microfe-body">
-                <div class="microfe-menu" id="<%- commonAppName %>__menu"></div>
-                <div id="__microfe-root-content"></div>
-              </div>
-            </div>
-          `,
-          css: '', // 样式文件路径
-        },
-        // 渲染容器获取
-        createOrGetContainer: (appId) => {
-          var container = document.querySelector('#'+appId);
-          if (!container) {
-            container = document.createElement('div');
-            container.id = appId;
-
-            const elContent = document.querySelector('#__microfe-root-content');
-            elContent.appendChild(container);
-          }
-          return container;
-        },
-        // 微应用列表，微应用名称和版本(或路径)
-        apps: {
-          <%- miniAppName %>: './app-config.js',
-        },
-      });
-    }());
+        MiniAppLoader.start({
+          getAppConfigPath: (appConfigPath) => {
+            if (!appConfigPath) {
+              throw new Error('Please specify appConfigPath.');
+            }
+            if (appConfigPath.lastIndexOf('app-config.js') > -1) {
+              return appConfigPath;
+            }
+            return '//g-assets.daily.taobao.net/' + appConfigPath + '/app-config.js';
+          },
+          apps: [
+            {
+              appConfigPath: './app-config.js',
+            },            
+          ],
+        });
+      }());
   </script>
 </body>
 </html>
