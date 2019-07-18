@@ -1,5 +1,5 @@
 <%
-  const { assets_url, heads, bodies, pages, debug, minAppName } = htmlWebpackPlugin.options
+  const { assets_url, heads, bodies, pages, debug, miniAppName, commonAppName } = htmlWebpackPlugin.options
   const version = '?v=' + (+ new Date())
 %>
 <!DOCTYPE html>
@@ -65,9 +65,9 @@
         skeleton: {
           html: `
             <div class="microfe-layout">
-              <div class="microfe-navbar" id="bcommon__navbar"></div>
+              <div class="microfe-navbar" id="<%- commonAppName %>__navbar"></div>
               <div class="microfe-body">
-                <div class="microfe-menu" id="bcommon__menu"></div>
+                <div class="microfe-menu" id="<%- commonAppName %>__menu"></div>
                 <div id="__microfe-root-content"></div>
               </div>
             </div>
@@ -88,7 +88,7 @@
         },
         // 微应用列表，微应用名称和版本(或路径)
         apps: {
-          <%- minAppName %>: './app-config.js',
+          <%- miniAppName %>: './app-config.js',
         },
       });
     }());

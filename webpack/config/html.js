@@ -14,8 +14,11 @@ module.exports = function (config, argv) {
   let htmlWebpackPlugins = [];
   let pages = get(SAAS_CONFIG, 'page', {});
   let debug = get(SAAS_CONFIG, 'debug', false);
-  let minAppName = get(SAAS_CONFIG, 'microConfig.minAppName', '');
-  minAppName = minAppName ? minAppName : 'local';
+  let miniAppName = get(SAAS_CONFIG, 'miniAppName', '');
+  let isCommonApp = get(SAAS_CONFIG, 'isCommonApp', false);
+
+  miniAppName = miniAppName ? miniAppName : 'common';
+  const commonAppName = isCommonApp ? miniAppName : 'common';
 
   htmlWebpackPlugins.push(new HtmlWebpackPlugin({
     inject: false,
@@ -26,7 +29,8 @@ module.exports = function (config, argv) {
     heads: resolveHeads,
     bodies: resolveBodies,
     assets_url: ASSETS_URL,
-    minAppName: minAppName,
+    miniAppName,
+    commonAppName,
     env: process.env.NODE_ENV || 'production',
   }));
 

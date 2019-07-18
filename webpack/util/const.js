@@ -42,10 +42,10 @@ const PATH_PARAMS = {
   CSS_SCOPE
 };
 
-console.log('PROCESS_ENV');
-console.log(JSON.stringify(process.env, null, 2));
+// console.log('PROCESS_ENV');
+// console.log(JSON.stringify(process.env, null, 2));
 
-console.log('PATH_PARAMS:');
-console.log(JSON.stringify(PATH_PARAMS, null, 2));
+// console.log('PATH_PARAMS:');
+// console.log(JSON.stringify(PATH_PARAMS, null, 2));
 
 module.exports = PATH_PARAMS;

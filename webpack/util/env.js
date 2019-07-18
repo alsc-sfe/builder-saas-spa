@@ -38,7 +38,7 @@ const ENV_PARAMS = {
   BUILD_GIT_VERSION,
 };
 
-console.log('ENV:');
-console.log(process.env);
+// console.log('ENV:');
+// console.log(process.env);
 
 module.exports = ENV_PARAMS;
