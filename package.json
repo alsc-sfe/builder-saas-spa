@@ -1,6 +1,6 @@
 {
   "name": "@ali/builder-saas-spa",
-  "version": "1.1.11",
+  "version": "1.1.13",
   "description": "The DEF Koubei Saas builder",
   "scripts": {},
   "repository": {
@@ -20,6 +20,7 @@
     "saas"
   ],
   "dependencies": {
+    "@ali/babel-plugin-react-css-module-transformer": "^1.0.2",
     "@ali/def-pub-client": "^2.2.0",
     "@ali/saas-webpack-system-module": "1",
     "@babel/core": "7",
