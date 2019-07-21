@@ -68,6 +68,7 @@
         const MiniAppLoader = (await System.import('MiniAppLoader')).default;
 
         MiniAppLoader.start({
+          routerType: MiniAppLoader.RouterType.hash,
           getAppConfigPath: (appConfigPath) => {
             if (!appConfigPath) {
               throw new Error('Please specify appConfigPath.');
