@@ -1,4 +1,4 @@
-const miniAppName = '{{ appName }}';
+const microAppName = '{{ appName }}';
 const pages = JSON.parse('{{ pages }}');
 
 const modules = [];
@@ -13,6 +13,6 @@ Object.keys(pages).forEach(item => {
 });
 
 export default {
-  miniAppName,
+  microAppName,
   modules,
 };

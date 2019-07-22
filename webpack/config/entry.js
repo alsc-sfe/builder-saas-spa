@@ -5,7 +5,7 @@ const fs = require('fs');
 const get = require('lodash/get');
 const nunjucks = require('nunjucks');
 const { ROOT_PATH, SAAS_CONFIG } = require('../util/const');
-const miniAppName = get(SAAS_CONFIG, 'miniAppName', '');
+const microAppName = get(SAAS_CONFIG, 'microAppName', '');
 
 nunjucks.configure('*', {
   autoescape: false,
@@ -18,7 +18,7 @@ module.exports = function (config, argv) {
   fs.writeFileSync(
     path.join(ROOT_PATH, '.micro_app_config.js'),
     nunjucks.renderString(fs.readFileSync(path.join(__dirname, '../dynamic/micro_app_config.es')).toString(), {
-      appName: miniAppName,
+      appName: microAppName,
       pages: JSON.stringify(pages),
     }),
   );

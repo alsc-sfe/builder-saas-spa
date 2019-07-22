@@ -1,5 +1,5 @@
 <%
-  const { assets_url, heads, bodies, pages, debug, miniAppName, commonAppName } = htmlWebpackPlugin.options
+  const { assets_url, heads, bodies, pages, debug, microAppName, commonAppName } = htmlWebpackPlugin.options
   const version = '?v=' + (+ new Date())
 %>
 <!DOCTYPE html>
@@ -13,7 +13,7 @@
   <meta name="format-detection" content="email=no" />
   <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/3.20.1/dist/antd.min.css">
   
-  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/mini-app-loader/0.0.3-beta.17/dist/mini-app-loader-with-config.system.js" as="script" crossorigin="anonymous">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/micro-app-loader/0.0.3-beta.19/dist/micro-app-loader-with-config.system.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/antd/3.20.1/dist/antd.min.js" as="script" crossorigin="anonymous">
@@ -26,7 +26,7 @@
   <script type="systemjs-importmap">
     {
       "imports": {
-        "MiniAppLoader": "https://gw.alipayobjects.com/os/lib/ali/mini-app-loader/0.0.3-beta.17/dist/mini-app-loader-with-config.system.js",
+        "MicroAppLoader": "https://gw.alipayobjects.com/os/lib/ali/micro-app-loader/0.0.3-beta.19/dist/micro-app-loader-with-config.system.js",
         "React": "https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js",
         "ReactDOM": "https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js",
         "antd": "https://gw.alipayobjects.com/os/lib/antd/3.20.1/dist/antd.min.js",
@@ -65,11 +65,11 @@
   </div>
   <script>
       (async function() {
-        const MiniAppLoader = (await System.import('MiniAppLoader')).default;
+        const MicroAppLoader = (await System.import('MicroAppLoader')).default;
 
-        MiniAppLoader.start({
-          routerType: MiniAppLoader.RouterType.hash,
-          getAppConfigPath: (appConfigPath) => {
+        MicroAppLoader.start({
+          routerType: MicroAppLoader.RouterType.hash,
+          getMicroAppConfigPath: (appConfigPath) => {
             if (!appConfigPath) {
               throw new Error('Please specify appConfigPath.');
             }
@@ -78,9 +78,9 @@
             }
             return '//g-assets.daily.taobao.net/' + appConfigPath + '/app-config.js';
           },
-          apps: [
+          microApps: [
             {
-              appConfigPath: './app-config.js',
+              microAppConfigPath: './app-config.js',
             },            
           ],
         });
