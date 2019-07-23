@@ -6,7 +6,7 @@ Object.keys(pages).forEach(item => {
   if (item !== 'common') {
     modules.push({
       moduleName: item,
-      getComponent: () => import(/* webpackChunkName: "[request]" */`./src/${item}`),
+      getComponent: () => System.import(PUBLIC_PATH + item + '.js'),
       route: pages[item].route,
     });
   }
