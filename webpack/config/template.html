@@ -16,7 +16,7 @@
   <% } %>
 
   <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/3.20.1/dist/antd.min.css">
-  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/micro-app-loader/0.0.3-beta.19/dist/micro-app-loader-with-config.system.js" as="script" crossorigin="anonymous">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/micro-app-loader/0.0.3-beta.22/dist/micro-app-loader-with-config.system.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/antd/3.20.1/dist/antd.min.js" as="script" crossorigin="anonymous">
@@ -29,7 +29,7 @@
   <script type="systemjs-importmap">
     {
       "imports": {
-        "MicroAppLoader": "https://gw.alipayobjects.com/os/lib/ali/micro-app-loader/0.0.3-beta.19/dist/micro-app-loader-with-config.system.js",
+        "MicroAppLoader": "https://gw.alipayobjects.com/os/lib/ali/micro-app-loader/0.0.3-beta.22/dist/micro-app-loader-with-config.system.js",
         "React": "https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js",
         "ReactDOM": "https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js",
         "antd": "https://gw.alipayobjects.com/os/lib/antd/3.20.1/dist/antd.min.js",
@@ -42,18 +42,23 @@
       height: 100%;
     }
     .microfe-layout {
+      height: 100%;
       display: flex;
       flex-direction: column;
     }
-    .microfe-navbar {
-      background-color: aliceblue;
-    }
     .microfe-body {
-      flex: auto;
+      flex: 1;
       display: flex;
     }
-    .microfe-menu {
-      background-color: antiquewhite;
+    .microfe-root-content {
+      position: relative;
+      flex: 1;
+      background-color: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+    }
+    .microfe-module {
+      flex: 1;
     }
   </style>
 </head>
@@ -62,8 +67,8 @@
   <div class="microfe-layout">
     <div class="microfe-navbar" id="<%- commonAppName %>__navbar"></div>
     <div class="microfe-body">
-      <div class="microfe-menu" id="<%- commonAppName %>__menu"></div>
-      <div id="__microfe-root-content"></div>
+        <div class="microfe-menu" id="<%- commonAppName %>__menu"></div>
+        <div class="microfe-root-content" id="__microfe-root-content"></div>
     </div>
   </div>
   <% for(let i = 0; i < bodies.length; i++) { %>
@@ -89,6 +94,39 @@
               microAppConfigPath: './app-config.js',
             },            
           ],
+          lifecycleAspect: {
+            before: (...args) => console.log('lifecycleAspect before called', args),
+            after(...args) {
+              const { module, microAppConfig, stage } = this;
+              const { moduleName } = module;
+              const { microAppName } = microAppConfig;
+              console.log(`${microAppName}.${moduleName} ${stage} lifecycleAspect after called`, args);
+            },
+            onError: (...args) => console.log('lifecycleAspect onError called', args),
+
+            mount: {
+              before(...args) {
+                const { stage, loaderConfig, microAppConfig, module } = this;
+                const { getModuleId, getModuleContainer } = loaderConfig;
+                const { microAppName } = microAppConfig;
+                const { moduleName } = module;
+                const moduleId = getModuleId(microAppName, moduleName);
+                const moduleContainer = getModuleContainer(moduleId);
+                moduleContainer.className += 'microfe-module';
+              },
+            },
+            unmount: {
+              after(...args) {
+                const { stage, loaderConfig, microAppConfig, module } = this;
+                const { getModuleId, getModuleContainer } = loaderConfig;
+                const { microAppName } = microAppConfig;
+                const { moduleName } = module;
+                const moduleId = getModuleId(microAppName, moduleName);
+                const moduleContainer = getModuleContainer(moduleId);
+                moduleContainer.className = moduleContainer.className.replace('microfe-module', '');
+              },
+            },
+          },
         });
       }());
   </script>
