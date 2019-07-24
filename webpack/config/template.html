@@ -50,15 +50,18 @@
       flex: 1;
       display: flex;
     }
+    .microfe-menu {
+      height: 100%;
+      overflow-y: auto;
+    }
     .microfe-root-content {
       position: relative;
       flex: 1;
       background-color: #f0f2f5;
       display: flex;
       flex-direction: column;
-    }
-    .microfe-module {
-      flex: 1;
+      overflow-y: auto;
+      height: 100%;
     }
   </style>
 </head>
@@ -103,29 +106,6 @@
               console.log(microAppName + '.' + moduleName + ' ' + stage + ' lifecycleAspect after called', args);
             },
             onError: (...args) => console.log('lifecycleAspect onError called', args),
-
-            mount: {
-              before(...args) {
-                const { stage, loaderConfig, microAppConfig, module } = this;
-                const { getModuleId, getModuleContainer } = loaderConfig;
-                const { microAppName } = microAppConfig;
-                const { moduleName } = module;
-                const moduleId = getModuleId(microAppName, moduleName);
-                const moduleContainer = getModuleContainer(moduleId);
-                moduleContainer.className += ' microfe-module ';
-              },
-            },
-            unmount: {
-              after(...args) {
-                const { stage, loaderConfig, microAppConfig, module } = this;
-                const { getModuleId, getModuleContainer } = loaderConfig;
-                const { microAppName } = microAppConfig;
-                const { moduleName } = module;
-                const moduleId = getModuleId(microAppName, moduleName);
-                const moduleContainer = getModuleContainer(moduleId);
-                moduleContainer.className = moduleContainer.className.replace(' microfe-module ', '');
-              },
-            },
           },
         });
       }());
