@@ -5,7 +5,7 @@ const url = require('url-join');
 const parse = require('yargs-parser');
 const BUILDER_ENV = require('./env');
 const ROOT_PATH = process.cwd();
-const SAAS_CONFIG = require(path.join(ROOT_PATH, 'saas.config.ts'));
+const SAAS_CONFIG = require(path.join(ROOT_PATH, 'app.config.ts'));
 
 const BUILD_ENV = BUILDER_ENV.BUILD_ENV;
 const SRC_PATH = path.resolve(ROOT_PATH, 'src');
