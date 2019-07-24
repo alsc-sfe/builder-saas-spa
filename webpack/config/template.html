@@ -100,7 +100,7 @@
               const { module, microAppConfig, stage } = this;
               const { moduleName } = module;
               const { microAppName } = microAppConfig;
-              console.log(`${microAppName}.${moduleName} ${stage} lifecycleAspect after called`, args);
+              console.log(microAppName + '.' + moduleName + ' ' + stage + ' lifecycleAspect after called', args);
             },
             onError: (...args) => console.log('lifecycleAspect onError called', args),
 
