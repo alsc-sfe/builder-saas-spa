@@ -16,7 +16,7 @@
   <% } %>
 
   <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/antd/3.20.1/dist/antd.min.css">
-  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/micro-app-loader/0.0.3-beta.22/dist/micro-app-loader-with-config.system.js" as="script" crossorigin="anonymous">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/micro-app-loader/0.0.3-beta.23/dist/micro-app-loader-with-config.system.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/antd/3.20.1/dist/antd.min.js" as="script" crossorigin="anonymous">
@@ -29,7 +29,7 @@
   <script type="systemjs-importmap">
     {
       "imports": {
-        "MicroAppLoader": "https://gw.alipayobjects.com/os/lib/ali/micro-app-loader/0.0.3-beta.22/dist/micro-app-loader-with-config.system.js",
+        "MicroAppLoader": "https://gw.alipayobjects.com/os/lib/ali/micro-app-loader/0.0.3-beta.23/dist/micro-app-loader-with-config.system.js",
         "React": "https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js",
         "ReactDOM": "https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js",
         "antd": "https://gw.alipayobjects.com/os/lib/antd/3.20.1/dist/antd.min.js",
@@ -112,7 +112,7 @@
                 const { moduleName } = module;
                 const moduleId = getModuleId(microAppName, moduleName);
                 const moduleContainer = getModuleContainer(moduleId);
-                moduleContainer.className += 'microfe-module';
+                moduleContainer.className += ' microfe-module ';
               },
             },
             unmount: {
@@ -123,7 +123,7 @@
                 const { moduleName } = module;
                 const moduleId = getModuleId(microAppName, moduleName);
                 const moduleContainer = getModuleContainer(moduleId);
-                moduleContainer.className = moduleContainer.className.replace('microfe-module', '');
+                moduleContainer.className = moduleContainer.className.replace(' microfe-module ', '');
               },
             },
           },
