@@ -6,6 +6,6 @@ module.exports = function(config) {
   config.externals['react'] = 'React';
   config.externals['react-dom'] = 'ReactDOM';
   config.externals['antd'] = 'antd';
-  config.externals['@ant-desin/icons'] = 'AntDesignIcons';
+  config.externals['@ant-design/icons/lib/dist'] = 'AntDesignIcons';
   config.externals['single-spa'] = 'singleSpa';
 }
