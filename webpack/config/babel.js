@@ -34,14 +34,6 @@ module.exports = {
       resolve('@babel/plugin-proposal-class-properties'),
       resolve('@babel/plugin-proposal-export-default-from'),
       resolve('@babel/plugin-proposal-export-namespace-from'),
-      [resolve('babel-plugin-import'), {
-        libraryName: '@alipay/cook',
-        style: true,
-      }, '@alipay/cook'],
-      [resolve('babel-plugin-import'), {
-        libraryName: 'antd',
-        style: true,
-      }, 'antd'],
       resolve('babel-plugin-syntax-dynamic-import'),
       resolve('@ali/babel-plugin-react-css-module-transformer'),
       [resolve('babel-plugin-react-css-modules'), {
