@@ -19,11 +19,17 @@ module.exports = function (config, argv) {
 
   Object.keys(pages).forEach(chunkName => {
     let entryValue = [];
+    let hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
 
     //每个页面的index.jsx入口文件
     let jsEntryFile = path.join(SRC_PATH, chunkName, 'index');
     let commonEntryFile = path.join(SRC_PATH, 'common/index');
-    entryValue.push(commonEntryFile, jsEntryFile);
+    // development下使用热更新
+    if (process.env.NODE_ENV === 'development') {
+      entryValue.push(hotMiddlewareScript, commonEntryFile, jsEntryFile);
+    } else {
+      entryValue.push(commonEntryFile, jsEntryFile);
+    }
     entries[chunkName] = entryValue.concat(resolveEntry);
   })
 
