@@ -50,7 +50,8 @@ module.exports = {
           ".less": {
             "syntax": "postcss-less"
           }
-        }
+        },
+        autoResolveMultipleImports: true
       }]
     ],
   }
