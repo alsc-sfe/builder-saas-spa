@@ -1,13 +1,13 @@
 const microAppName = '{{ appName }}';
-const pages = JSON.parse('{{ pages }}');
+const pages = {{ pages }};
 
 const modules = [];
 Object.keys(pages).forEach(item => {
   if (item !== 'common') {
     modules.push({
+      ...pages[item],
       moduleName: item,
       getComponent: () => System.import(PUBLIC_PATH + item + '.js'),
-      route: pages[item].route,
     });
   }
 });
