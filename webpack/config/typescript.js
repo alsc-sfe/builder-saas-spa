@@ -11,6 +11,7 @@ module.exports = function (config) {
   let tsModuleRule = {
     test: /\.tsx?$/,
     exclude: /node_modules/,
+    // exclude: /node_modules[\\/](?!(saas-biz-pc)[\\/]).*/,
     use: [
       babelLoader,
       {

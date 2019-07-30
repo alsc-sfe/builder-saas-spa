@@ -44,6 +44,5 @@ module.exports = function (config, argv) {
   // micro app config file
   entries['app-config'] = path.join(ROOT_PATH, '.micro_app_config.js');
 
-  console.log(entries);
   config.entry = entries;
 }

@@ -51,6 +51,8 @@ module.exports = function (config, argv) {
     sourceMap: true
   }
 
+  const excludeReg = [path.resolve(ROOT_PATH, 'node_modules'), /saas-biz-pc/];
+
   const styleModuleRule = [{
     test: /\.css$/,
     exclude: path.resolve(ROOT_PATH, 'src/'),
@@ -65,7 +67,7 @@ module.exports = function (config, argv) {
   },
   {
     test: /\.less$/,
-    exclude: path.resolve(ROOT_PATH, 'node_modules/'),
+    exclude: excludeReg,
     use: [{
       loader: require.resolve('style-loader'),
     }, {
@@ -86,7 +88,7 @@ module.exports = function (config, argv) {
   },
   {
     test: /\.less$/,
-    include: path.resolve(ROOT_PATH, 'node_modules/'),
+    include: excludeReg,
     use: [{
       loader: require.resolve('style-loader'),
     }, {
