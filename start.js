@@ -52,12 +52,14 @@ const start = async () => {
 
   // set devServerOption
   const devServerOption = {
-    publicPath: '/',
-    hot: false,
+    publicPath: webpackDevConfig.output.publicPath,
+    hot: true,
     compress: true,
     disableHostCheck: true,
     quiet: false,
+    host: 'local.koubei.test',
   }
+
   // compile and start server
   const server = new WebpackDevServer(compiler, devServerOption);
   server.listen(startParam.port, '0.0.0.0')

@@ -18,8 +18,8 @@ module.exports = function(config) {
   config.devServer = config.devServer || {};
 
   config.plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
-  config.plugins.push(new webpack.HotModuleReplacementPlugin());
-  config.plugins.push(new webpack.NoEmitOnErrorsPlugin());
+  // config.plugins.push(new webpack.HotModuleReplacementPlugin());
+  // config.plugins.push(new webpack.NoEmitOnErrorsPlugin());
   // 显示编译进度
   config.plugins.push(new ProgressBarPlugin());
   // chunk分析
