@@ -1,6 +1,6 @@
 {
   "name": "@ali/builder-saas-spa",
-  "version": "1.1.36",
+  "version": "1.1.37",
   "description": "The DEF Koubei Saas builder",
   "scripts": {},
   "repository": {
@@ -40,6 +40,7 @@
     "babel-plugin-react-css-modules": "^5.2.6",
     "babel-plugin-syntax-dynamic-import": "6",
     "chalk": "2",
+    "chokidar": "^3.0.2",
     "clean-webpack-plugin": "0",
     "co": "^4.6.0",
     "copy-webpack-plugin": "4",
@@ -66,6 +67,7 @@
     "webpack-bundle-analyzer": "3",
     "webpack-cli": "3",
     "webpack-dev-middleware": "3",
+    "webpack-dev-server": "3",
     "webpack-hot-middleware": "2",
     "webpack-system-register": "^1.6.0",
     "yargs-parser": "13"

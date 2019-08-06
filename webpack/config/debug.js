@@ -24,14 +24,4 @@ module.exports = function(config) {
   config.plugins.push(new ProgressBarPlugin());
   // chunk分析
   analyze && config.plugins.push(new BundleAnalyzerPlugin());
-
-  // set devServer
-  // config.devServer = {
-  //   host: '127.0.0.1',
-  //   port: '9009',
-  //   disableHostCheck: true,
-  //   historyApiFallback: true,
-  //   contentBase: "./",
-  //   open: true,
-  // }
 }
