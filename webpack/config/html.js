@@ -16,6 +16,7 @@ module.exports = function (config, argv) {
   let debug = get(SAAS_CONFIG, 'debug', false);
   let microAppName = get(SAAS_CONFIG, 'microAppName', '');
   let isCommonApp = get(SAAS_CONFIG, 'isCommonApp', false);
+  const otherMicroApps = get(SAAS_CONFIG, 'otherMicroApps', []);
 
   microAppName = microAppName ? microAppName : 'common';
   const commonAppName = isCommonApp ? microAppName : 'common';
@@ -31,6 +32,7 @@ module.exports = function (config, argv) {
     assets_url: ASSETS_URL,
     microAppName,
     commonAppName,
+    otherMicroApps,
     env: process.env.NODE_ENV || 'production',
   }));
 

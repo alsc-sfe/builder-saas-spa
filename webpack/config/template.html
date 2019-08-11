@@ -102,9 +102,12 @@
             return '//g-assets.daily.taobao.net/' + appConfigPath + '/app-config.js';
           },
           microApps: [
+            <% for(let i = 0; i < otherMicroApps.length; i++) { %>
+              <%- JSON.stringify(otherMicroApps[i], null, 2) %>,
+            <% } %>
             {
               microAppConfigPath: './app-config.js',
-            },            
+            },
           ],
           lifecycleAspect: {
             before: (...args) => console.log('lifecycleAspect before called', args),
