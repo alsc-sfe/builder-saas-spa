@@ -103,7 +103,7 @@
           },
           microApps: [
             <% for(let i = 0; i < otherMicroApps.length; i++) { %>
-              <%- JSON.stringify(otherMicroApps[i], null, 2) %>,
+              <%= JSON.stringify(otherMicroApps[i], null, 2) %>,
             <% } %>
             {
               microAppConfigPath: './app-config.js',
