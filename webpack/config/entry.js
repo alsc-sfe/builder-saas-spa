@@ -30,7 +30,7 @@ module.exports = function (config, argv) {
     } else {
       entryValue.push(commonEntryFile, jsEntryFile);
     }
-    entries[chunkName] = entryValue.concat(resolveEntry);
+    entries[chunkName] = resolveEntry.concat(entryValue);
   })
 
   fs.writeFileSync(
