@@ -15,13 +15,15 @@ const BUILD_GIT_GROUP = BUILDER_ENV.BUILD_GIT_GROUP;
 const BUILD_GIT_PROJECT = BUILDER_ENV.BUILD_GIT_PROJECT;
 const BUILD_GIT_VERSION = BUILDER_ENV.BUILD_GIT_VERSION;
 
+let argv = !!BUILDER_ENV.BUILD_ARGV_STR ? parse(BUILDER_ENV.BUILD_ARGV_STR) : {};
+
 // 取得当前是日常还是生产环境
 // 日常： --def_publish_type=assets --def_publish_env=daily
 // 生产：
 console.log('获取构建环境：');
 console.log(BUILDER_ENV.BUILD_ARGV_STR);
-let argv = !!BUILDER_ENV.BUILD_ARGV_STR ? parse(BUILDER_ENV.BUILD_ARGV_STR) : {};
-if (!argv.def_publish_env) {
+// 云构建时校验是否开启线上构建
+if (BUILD_ENV === 'cloud' && !argv.def_publish_env) {
   console.log(chalk.red('未开启线上构建, 参考文档：https://yuque.antfin-inc.com/alsc-saas/vt2tmg/ehge2p#UqnpK'));
   process.exit(0);  
 }
