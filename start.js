@@ -15,7 +15,10 @@ const compiler = webpack(webpackDevConfig);
 const start = async () => {
   const getStartParam = async () => {
     let devServer = get(SAAS_CONFIG, 'webpack.devServer', {});
-    const port = await portfinder.getPortPromise();
+    const port = await portfinder.getPortPromise({
+      port: 8000,    // minimum port
+      stopPort: 9000 // maximum port
+    });
     devServer.port = port;
     let startParam = Object.assign({
       host: 'local.koubei.test',
