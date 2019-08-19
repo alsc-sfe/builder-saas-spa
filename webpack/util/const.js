@@ -20,8 +20,8 @@ let argv = !!BUILDER_ENV.BUILD_ARGV_STR ? parse(BUILDER_ENV.BUILD_ARGV_STR) : {}
 // 取得当前是日常还是生产环境
 // 日常： --def_publish_type=assets --def_publish_env=daily
 // 生产：
-console.log('获取构建环境：');
-console.log(BUILDER_ENV.BUILD_ARGV_STR);
+// console.log('获取构建环境：');
+// console.log(BUILDER_ENV.BUILD_ARGV_STR);
 // 云构建时校验是否开启线上构建
 // BUILD_ENV === 'cloud' 云构建、BUILD_ENV === 'local' 本地构建
 if (BUILD_ENV === 'cloud' && !argv.def_publish_env) {
