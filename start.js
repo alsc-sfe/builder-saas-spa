@@ -15,17 +15,20 @@ const compiler = webpack(webpackDevConfig);
 const start = async () => {
   const getStartParam = async () => {
     let devServer = get(SAAS_CONFIG, 'webpack.devServer', {});
-    const port = await portfinder.getPortPromise({
-      port: 8000,    // minimum port
-      stopPort: 9000 // maximum port
-    });
-    devServer.port = port;
+    let port = devServer.port;
+    if (!port) {
+      port = await portfinder.getPortPromise({
+        port: 8000,
+        stopPort: 9000,
+      });
+    }
+
     let startParam = Object.assign({
       host: 'local.koubei.test',
       path: '',
       query: {},
-      port: 3333,
-    }, devServer);
+    }, devServer, { port });
+
     let url = `http://${startParam.host}:${startParam.port}/index.html`;
     if (startParam.path) {
       url += `#/${startParam.path}`
