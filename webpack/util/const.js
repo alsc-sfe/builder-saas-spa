@@ -31,7 +31,7 @@ if (BUILD_ENV === 'cloud' && !argv.def_publish_env) {
 
 let CDN_BASE = '//g.alicdn.com/';
 if (argv.def_publish_env === 'daily') {
-  CDN_BASE = '//g-assets.daily.taobao.net/';
+  CDN_BASE = '//dev.g.alicdn.com/';
 }
 
 let ASSETS_URL = '/';
