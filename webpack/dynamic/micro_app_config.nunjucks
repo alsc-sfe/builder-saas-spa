@@ -8,7 +8,13 @@ Object.keys(pages).forEach(item => {
     modules.push({
       ...pages[item],
       moduleName: item,
-      getComponent: () => System.import(PUBLIC_PATH + item + '.js'),
+      getComponent: () => {
+        if (version) {
+          return System.import(PUBLIC_PATH + item + '.js?t=' + version);
+        } else {
+          return System.import(PUBLIC_PATH + item + '.js');
+        }
+      },
     });
   }
 });
