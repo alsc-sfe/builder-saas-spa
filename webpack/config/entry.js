@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const get = require('lodash/get');
 const nunjucks = require('nunjucks');
-const { ROOT_PATH, SAAS_CONFIG, SRC_PATH } = require('../util/const');
+const { ROOT_PATH, SAAS_CONFIG, SRC_PATH, PUBLISH_ENV } = require('../util/const');
 const microAppName = get(SAAS_CONFIG, 'microAppName', '');
 const plugins = require('../util/resolvePlugins')();
 const { resolveEntry } = plugins;
@@ -38,6 +38,7 @@ module.exports = function (config, argv) {
     nunjucks.renderString(fs.readFileSync(path.join(__dirname, '../dynamic/micro_app_config.nunjucks')).toString(), {
       appName: microAppName,
       pages: JSON.stringify(pages),
+      version: PUBLISH_ENV === 'daily' ? (+ new Date()) : '',
     }),
   );
 

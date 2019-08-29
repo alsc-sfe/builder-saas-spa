@@ -1,5 +1,6 @@
 const microAppName = '{{ appName }}';
 const pages = {{ pages }};
+const version = '{{ version }}';
 
 const modules = [];
 Object.keys(pages).forEach(item => {
@@ -15,4 +16,5 @@ Object.keys(pages).forEach(item => {
 export default {
   microAppName,
   modules,
+  version,
 };
