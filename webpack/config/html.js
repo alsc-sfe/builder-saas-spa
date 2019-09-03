@@ -16,10 +16,14 @@ module.exports = function (config, argv) {
   let debug = get(SAAS_CONFIG, 'debug', false);
   let microAppName = get(SAAS_CONFIG, 'microAppName', '');
   let isCommonApp = get(SAAS_CONFIG, 'isCommonApp', false);
-  const otherMicroApps = get(SAAS_CONFIG, 'otherMicroApps', []);
 
-  microAppName = microAppName ? microAppName : 'common';
-  const commonAppName = isCommonApp ? microAppName : 'common';
+  let layout = get(SAAS_CONFIG, 'layout', false);
+  if (layout === true) {
+    layout = 'alsc-saas/web-boh-common/1.0.26';
+  }
+
+  microAppName = microAppName ? microAppName : 'bcommon';
+  const commonAppName = isCommonApp ? microAppName : 'bcommon';
 
   htmlWebpackPlugins.push(new HtmlWebpackPlugin({
     inject: false,
@@ -32,7 +36,7 @@ module.exports = function (config, argv) {
     assets_url: ASSETS_URL,
     microAppName,
     commonAppName,
-    otherMicroApps,
+    layout,
     env: process.env.NODE_ENV || 'production',
   }));
 
