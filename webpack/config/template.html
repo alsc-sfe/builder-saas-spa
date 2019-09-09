@@ -1,6 +1,8 @@
 <%
   const { assets_url, heads, bodies, pages, debug, microAppName, commonAppName, layout } = htmlWebpackPlugin.options
   const version = '?v=' + (+ new Date())
+  const antdVersion = "3.22.2-beta.1"
+  const waLoaderVersion = "0.0.3-beta.42"
 %>
 <!DOCTYPE html>
 <html lang="zh">
@@ -15,11 +17,11 @@
     <%= heads[i] %>
   <% } %>
 
-  <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/ali/antd-boh/3.22.2-beta.0/dist/antd.css">
-  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/micro-app-loader/0.0.3-beta.42/dist/micro-app-loader-with-config.system.js" as="script" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/ali/antd-boh/<%= antdVersion>/dist/antd.css">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/micro-app-loader/<%= waLoaderVersion>/dist/micro-app-loader-with-config.system.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js" as="script" crossorigin="anonymous">
-  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/antd-boh/3.22.2-beta.0/dist/antd-with-locales.js" as="script" crossorigin="anonymous">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/antd-boh/<%= antdVersion>/dist/antd-with-locales.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/single-spa/4.3.5/lib/system/single-spa.min.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ant-design/icons/2.1.1/lib/umd.js" as="script" crossorigin="anonymous">
 
@@ -31,10 +33,10 @@
   <script type="systemjs-importmap">
     {
       "imports": {
-        "MicroAppLoader": "https://gw.alipayobjects.com/os/lib/ali/micro-app-loader/0.0.3-beta.42/dist/micro-app-loader-with-config.system.js",
+        "MicroAppLoader": "https://gw.alipayobjects.com/os/lib/ali/micro-app-loader/<%= waLoaderVersion>/dist/micro-app-loader-with-config.system.js",
         "React": "https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js",
         "ReactDOM": "https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js",
-        "antd": "https://gw.alipayobjects.com/os/lib/antd/3.22.0/dist/antd-with-locales.js",
+        "antd": "https://gw.alipayobjects.com/os/lib/ali/antd-boh/<%= antdVersion>/dist/antd-with-locales.js",
         "singleSpa": "https://gw.alipayobjects.com/os/lib/single-spa/4.3.5/lib/system/single-spa.min.js",
         "AntDesignIcons": "https://gw.alipayobjects.com/os/lib/ant-design/icons/2.1.1/lib/umd.js"
       }
