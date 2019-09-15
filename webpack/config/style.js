@@ -6,11 +6,14 @@
 
 const path = require('path');
 const get = require('lodash/get');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const pxtoremPlugin = require('postcss-pxtorem');
 const safeAreaInsetPlugin = require('postcss-safe-area-inset')
 const autoprefixer = require('autoprefixer');
-const { SAAS_CONFIG, CSS_SCOPE, ROOT_PATH } = require('../util/const');
+const {
+  SAAS_CONFIG,
+  CSS_SCOPE,
+  ROOT_PATH
+} = require('../util/const');
 
 // 获取sass.config.js themes配置
 let themes = get(SAAS_CONFIG, 'webpack.themes', {});
@@ -54,55 +57,56 @@ module.exports = function (config, argv) {
   const excludeReg = [path.resolve(ROOT_PATH, 'node_modules'), /saas-biz-pc/];
 
   const styleModuleRule = [{
-    test: /\.css$/,
-    exclude: path.resolve(ROOT_PATH, 'src/'),
-    use: [{
-      loader: require.resolve('style-loader'),
-    }, {
-      loader: require.resolve('css-loader'),
-    }, {
-      loader: require.resolve('postcss-loader'),
-      options: postcssOptions,
-    }],
-  },
-  {
-    test: /\.less$/,
-    exclude: excludeReg,
-    use: [{
-      loader: require.resolve('style-loader'),
-    }, {
-      loader: require.resolve('css-loader'),
-      options: cssOptions
-    }, {
-      loader: require.resolve('postcss-loader'),
-      options: postcssOptions,
-    }, 
+      test: /\.css$/,
+      exclude: path.resolve(ROOT_PATH, 'src/'),
+      use: [{
+        loader: require.resolve('style-loader'),
+      }, {
+        loader: require.resolve('css-loader'),
+      }, {
+        loader: require.resolve('postcss-loader'),
+        options: postcssOptions,
+      }],
+    },
     {
-      loader: require.resolve('less-loader'),
-      options: {
-        sourceMap: true,
-        modifyVars: themes,
-      },
+      test: /\.less$/,
+      exclude: excludeReg,
+      use: [{
+          loader: require.resolve('style-loader'),
+        }, {
+          loader: require.resolve('css-loader'),
+          options: cssOptions
+        }, {
+          loader: require.resolve('postcss-loader'),
+          options: postcssOptions,
+        },
+        {
+          loader: require.resolve('less-loader'),
+          options: {
+            sourceMap: true,
+            modifyVars: themes,
+          },
+        }
+      ]
+    },
+    {
+      test: /\.less$/,
+      include: excludeReg,
+      use: [{
+          loader: require.resolve('style-loader'),
+        }, {
+          loader: require.resolve('css-loader'),
+        },
+        {
+          loader: require.resolve('less-loader'),
+          options: {
+            sourceMap: true,
+            modifyVars: themes,
+          },
+        }
+      ]
     }
-  ]
-  },
-  {
-    test: /\.less$/,
-    include: excludeReg,
-    use: [{
-      loader: require.resolve('style-loader'),
-    }, {
-      loader: require.resolve('css-loader'),
-    }, 
-    {
-      loader: require.resolve('less-loader'),
-      options: {
-        sourceMap: true,
-        modifyVars: themes,
-      },
-    }]
-  }
-];
+  ];
 
   config.module.rules = config.module.rules.concat(styleModuleRule);
 };

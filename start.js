@@ -64,6 +64,7 @@ const start = async () => {
     disableHostCheck: true,
     quiet: false,
     host: 'local.koubei.test',
+    historyApiFallback: true,
   }
 
   // compile and start server
