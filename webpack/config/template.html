@@ -49,15 +49,16 @@
     .microfe-layout {
       height: 100%;
       display: flex;
-      flex-direction: column;
-    }
-    .microfe-body {
-      flex: 1;
-      display: flex;
     }
     .microfe-menu {
       height: 100%;
       overflow-y: auto;
+    }
+    .microfe-body {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
     .microfe-root-content {
       position: relative;
@@ -80,10 +81,10 @@
 <body>
   <!-- <%= JSON.stringify(htmlWebpackPlugin, null, 2) %> -->
   <div class="microfe-layout">
-    <div class="microfe-navbar" id="<%- commonAppName %>__navbar"></div>
+    <div class="microfe-menu" id="<%- commonAppName %>__menu"></div>
     <div class="microfe-body">
-        <div class="microfe-menu" id="<%- commonAppName %>__menu"></div>
-        <div class="microfe-root-content" id="__microfe-root-content"></div>
+      <div class="microfe-navbar" id="<%- commonAppName %>__navbar"></div>
+      <div class="microfe-root-content" id="__microfe-root-content"></div>
     </div>
   </div>
   <% for(let i = 0; i < bodies.length; i++) { %>
@@ -94,7 +95,7 @@
         const MicroAppLoader = (await System.import('MicroAppLoader')).default;
 
         MicroAppLoader.start({
-          routerType: MicroAppLoader.RouterType.hash,
+          // routerType: MicroAppLoader.RouterType.hash,
           getMicroAppConfigPath: (appConfigPath) => {
             if (!appConfigPath) {
               throw new Error('Please specify appConfigPath.');

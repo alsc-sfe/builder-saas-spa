@@ -29,9 +29,9 @@ const start = async () => {
       query: {},
     }, devServer, { port });
 
-    let url = `http://${startParam.host}:${startParam.port}/index.html`;
+    let url = `http://${startParam.host}:${startParam.port}`;
     if (startParam.path) {
-      url += `#/${startParam.path}`
+      url += `/${startParam.path}`
     }
   
     const query = querystring.stringify(startParam.query);
