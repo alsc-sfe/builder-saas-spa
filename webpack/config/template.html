@@ -24,11 +24,14 @@
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/antd-boh/<%= antdVersion %>/dist/antd-with-locales.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/single-spa/4.3.5/lib/system/single-spa.min.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ant-design/icons/2.1.1/lib/umd.js" as="script" crossorigin="anonymous">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/mentor/saas-fetch/2.0.4-beta.2/umd/saas-fetch.js" as="script" crossorigin="anonymous">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/mentor/mtop-adapter/1.0.7-beta.2/umd/mtop-adapter.js" as="script" crossorigin="anonymous">
 
   <script src="https://gw.alipayobjects.com/as/g/component/babel-polyfill/6.20.0/polyfill.min.js"></script>
   <script src="https://gw.alipayobjects.com/os/lib/systemjs/4.0.2/dist/system.min.js"></script>
   <script src="https://gw.alipayobjects.com/os/lib/moment/2.24.0/min/moment.min.js"></script>
   <script src="https://gw.alipayobjects.com/os/lib/moment/2.24.0/locale/zh-cn.js"></script>
+
   <!-- 声明依赖模块路径 -->
   <script type="systemjs-importmap">
     {
@@ -38,7 +41,9 @@
         "ReactDOM": "https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js",
         "antd": "https://gw.alipayobjects.com/os/lib/ali/antd-boh/<%= antdVersion %>/dist/antd-with-locales.js",
         "singleSpa": "https://gw.alipayobjects.com/os/lib/single-spa/4.3.5/lib/system/single-spa.min.js",
-        "AntDesignIcons": "https://gw.alipayobjects.com/os/lib/ant-design/icons/2.1.1/lib/umd.js"
+        "AntDesignIcons": "https://gw.alipayobjects.com/os/lib/ant-design/icons/2.1.1/lib/umd.js",
+        "saas-fetch": "https://gw.alipayobjects.com/os/mentor/saas-fetch/2.0.4-beta.2/umd/saas-fetch.js",
+        "mtop-adapter": "https://gw.alipayobjects.com/os/mentor/mtop-adapter/1.0.7-beta.2/umd/mtop-adapter.js"
       }
     }
   </script>
@@ -92,8 +97,26 @@
   <% } %>
   <script>
       (async function() {
-        const MicroAppLoader = (await System.import('MicroAppLoader')).default;
+        const SaasFetch = (await System.import('saas-fetch')).default;
+        const MtopAdapter = (await System.import('mtop-adapter')).default;
+        function defaultNoSeesionAction() {
+          window.location.href = 'https://login.koubei.test/login.html?redirect='+encodeURIComponent(window.location.href);
+        }
+       
+        SaasFetch.registerFetcher('mtop', MtopAdapter);
+        SaasFetch.use([{
+          name: 'noSession',
+          action: async (ctx, next) => {
+            await next();
+            const { status }  = ctx.res;
+            if (status === 2) {
+              // session失效跳转登陆
+              defaultNoSeesionAction();
+            }
+          }
+        }])
 
+        const MicroAppLoader = (await System.import('MicroAppLoader')).default;
         MicroAppLoader.start({
           // routerType: MicroAppLoader.RouterType.hash,
           getMicroAppConfigPath: (appConfigPath) => {

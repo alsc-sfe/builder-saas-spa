@@ -8,4 +8,6 @@ module.exports = function(config) {
   config.externals['antd'] = 'antd';
   config.externals['@ant-design/icons/lib/dist'] = 'AntDesignIcons';
   config.externals['single-spa'] = 'singleSpa';
+  config.externals['saas-fetch'] = 'saas-fetch';
+  config.externals['mtop-adapter'] = 'mtop-adapter';
 }
