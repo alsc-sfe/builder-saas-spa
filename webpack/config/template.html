@@ -24,8 +24,8 @@
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/antd-boh/<%= antdVersion %>/dist/antd-with-locales.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/single-spa/4.3.5/lib/system/single-spa.min.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ant-design/icons/2.1.1/lib/umd.js" as="script" crossorigin="anonymous">
-  <link rel="preload" href="https://gw.alipayobjects.com/os/mentor/saas-fetch/2.0.4-beta.2/umd/saas-fetch.js" as="script" crossorigin="anonymous">
-  <link rel="preload" href="https://gw.alipayobjects.com/os/mentor/mtop-adapter/1.0.7-beta.2/umd/mtop-adapter.js" as="script" crossorigin="anonymous">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/mentor/saas-fetch/2.0.6/umd/saas-fetch.js" as="script" crossorigin="anonymous">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/mentor/saas-fetch-mtop/1.0.9/umd/saas-fetch-mtop.js" as="script" crossorigin="anonymous">
 
   <script src="https://gw.alipayobjects.com/as/g/component/babel-polyfill/6.20.0/polyfill.min.js"></script>
   <script src="https://gw.alipayobjects.com/os/lib/systemjs/4.0.2/dist/system.min.js"></script>
@@ -42,8 +42,8 @@
         "antd": "https://gw.alipayobjects.com/os/lib/ali/antd-boh/<%= antdVersion %>/dist/antd-with-locales.js",
         "singleSpa": "https://gw.alipayobjects.com/os/lib/single-spa/4.3.5/lib/system/single-spa.min.js",
         "AntDesignIcons": "https://gw.alipayobjects.com/os/lib/ant-design/icons/2.1.1/lib/umd.js",
-        "saas-fetch": "https://gw.alipayobjects.com/os/mentor/saas-fetch/2.0.4-beta.2/umd/saas-fetch.js",
-        "mtop-adapter": "https://gw.alipayobjects.com/os/mentor/mtop-adapter/1.0.7-beta.2/umd/mtop-adapter.js"
+        "saas-fetch": "https://gw.alipayobjects.com/os/mentor/saas-fetch/2.0.6/umd/saas-fetch.js",
+        "saas-fetch-mtop": "https://gw.alipayobjects.com/os/mentor/saas-fetch-mtop/1.0.9/umd/saas-fetch-mtop.js"
       }
     }
   </script>
@@ -120,12 +120,16 @@
   <script>
       (async function() {
         const SaasFetch = (await System.import('saas-fetch')).default;
-        const MtopAdapter = (await System.import('mtop-adapter')).default;
+        const SaasFetchMtop = (await System.import('saas-fetch-mtop')).default;
         function defaultNoSeesionAction() {
           window.location.href = 'https://login.koubei.test/login.html?redirect='+encodeURIComponent(window.location.href);
         }
        
-        SaasFetch.registerFetcher('mtop', MtopAdapter);
+        SaasFetch.registerFetcher('mtop', SaasFetchMtop);
+        debugger;
+        SaasFetch.setup({
+
+        });
         SaasFetch.use([{
           name: 'noSession',
           action: async (ctx, next) => {

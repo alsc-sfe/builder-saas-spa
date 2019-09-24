@@ -9,5 +9,5 @@ module.exports = function(config) {
   config.externals['@ant-design/icons/lib/dist'] = 'AntDesignIcons';
   config.externals['single-spa'] = 'singleSpa';
   config.externals['saas-fetch'] = 'saas-fetch';
-  config.externals['mtop-adapter'] = 'mtop-adapter';
+  config.externals['saas-fetch-mtop'] = 'saas-fetch-mtop';
 }
