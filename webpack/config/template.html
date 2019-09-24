@@ -24,8 +24,8 @@
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/antd-boh/<%= antdVersion %>/dist/antd-with-locales.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/single-spa/4.3.5/lib/system/single-spa.min.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ant-design/icons/2.1.1/lib/umd.js" as="script" crossorigin="anonymous">
-  <link rel="preload" href="https://gw.alipayobjects.com/os/mentor/saas-fetch/2.0.4-beta.2/umd/saas-fetch.js" as="script" crossorigin="anonymous">
-  <link rel="preload" href="https://gw.alipayobjects.com/os/mentor/mtop-adapter/1.0.7-beta.2/umd/mtop-adapter.js" as="script" crossorigin="anonymous">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/mentor/saas-fetch/2.0.6/umd/saas-fetch.js" as="script" crossorigin="anonymous">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/mentor/saas-fetch-mtop/1.0.9/umd/saas-fetch-mtop.js" as="script" crossorigin="anonymous">
 
   <script src="https://gw.alipayobjects.com/as/g/component/babel-polyfill/6.20.0/polyfill.min.js"></script>
   <script src="https://gw.alipayobjects.com/os/lib/systemjs/4.0.2/dist/system.min.js"></script>
@@ -42,8 +42,8 @@
         "antd": "https://gw.alipayobjects.com/os/lib/ali/antd-boh/<%= antdVersion %>/dist/antd-with-locales.js",
         "singleSpa": "https://gw.alipayobjects.com/os/lib/single-spa/4.3.5/lib/system/single-spa.min.js",
         "AntDesignIcons": "https://gw.alipayobjects.com/os/lib/ant-design/icons/2.1.1/lib/umd.js",
-        "saas-fetch": "https://gw.alipayobjects.com/os/mentor/saas-fetch/2.0.4-beta.2/umd/saas-fetch.js",
-        "mtop-adapter": "https://gw.alipayobjects.com/os/mentor/mtop-adapter/1.0.7-beta.2/umd/mtop-adapter.js"
+        "saas-fetch": "https://gw.alipayobjects.com/os/mentor/saas-fetch/2.0.6/umd/saas-fetch.js",
+        "saas-fetch-mtop": "https://gw.alipayobjects.com/os/mentor/saas-fetch-mtop/1.0.9/umd/saas-fetch-mtop.js"
       }
     }
   </script>
@@ -54,10 +54,10 @@
     .microfe-layout {
       height: 100%;
       display: flex;
+      overflow: hidden;
     }
     .microfe-menu {
       height: 100%;
-      overflow-y: auto;
     }
     .microfe-body {
       flex: 1;
@@ -71,8 +71,13 @@
       background-color: #f0f2f5;
       display: flex;
       flex-direction: column;
-      overflow-y: auto;
       height: 100%;
+      min-width: 800px;
+    }
+    .microfe-root-body{
+      width:100%;
+      height: 100%;
+      overflow: auto;;
     }
     .microfe-module {
       flex: 1;
@@ -80,6 +85,18 @@
     }
     .microfe-module>div {
       flex: 1;
+    }
+    @media screen and (max-width:1440px){
+      .microfe-body .microfe-root-content{
+        flex-shrink: 1;
+        min-width:1140px;    
+      }
+    }
+    @media screen and (min-width:2880px){
+      .microfe-body .microfe-root-content{
+        flex-grow: 0;
+        max-width: 2880px;
+      }
     }
   </style>
 </head>
@@ -89,7 +106,9 @@
     <div class="microfe-menu" id="<%- commonAppName %>__menu"></div>
     <div class="microfe-body">
       <div class="microfe-navbar" id="<%- commonAppName %>__navbar"></div>
-      <div class="microfe-root-content" id="__microfe-root-content"></div>
+      <div class="microfe-root-body">
+        <div class="microfe-root-content" id="__microfe-root-content"></div>
+      </div>
     </div>
   </div>
   <% for(let i = 0; i < bodies.length; i++) { %>
@@ -98,12 +117,16 @@
   <script>
       (async function() {
         const SaasFetch = (await System.import('saas-fetch')).default;
-        const MtopAdapter = (await System.import('mtop-adapter')).default;
+        const SaasFetchMtop = (await System.import('saas-fetch-mtop')).default;
         function defaultNoSeesionAction() {
           window.location.href = 'https://login.koubei.test/login.html?redirect='+encodeURIComponent(window.location.href);
         }
        
-        SaasFetch.registerFetcher('mtop', MtopAdapter);
+        SaasFetch.registerFetcher('mtop', SaasFetchMtop);
+        debugger;
+        SaasFetch.setup({
+
+        });
         SaasFetch.use([{
           name: 'noSession',
           action: async (ctx, next) => {

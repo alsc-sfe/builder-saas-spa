@@ -17,7 +17,7 @@ module.exports = function (config) {
   // 创建 import 或 require 的别名
   config.resolve.alias = {
     'saas-fetch': '@ali/saas-fetch',
-    'mtop-adapter': '@ali/mtop-adapter',
+    'saas-fetch-mtop': '@ali/saas-fetch-mtop',
   };
 
   config.resolve.modules = mPath;
