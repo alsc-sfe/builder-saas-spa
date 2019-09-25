@@ -49,6 +49,7 @@ module.exports = function (config, argv) {
   const pagesNew = [];
   let num = 1;
   pages.forEach(item => {
+    item.moduleReal = item.module;
     if (pagesNew.findIndex(itemInner => itemInner.module === item.module) > -1) {
       pagesNew.push({
         ...item,

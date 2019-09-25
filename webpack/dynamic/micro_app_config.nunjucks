@@ -9,9 +9,9 @@ pages.forEach(item => {
     moduleName: item.module,
     getComponent: () => {
       if (version) {
-        return System.import(PUBLIC_PATH + item.module + '.js?t=' + version);
+        return System.import(PUBLIC_PATH + item.moduleReal + '.js?t=' + version);
       } else {
-        return System.import(PUBLIC_PATH + item.module + '.js');
+        return System.import(PUBLIC_PATH + item.moduleReal + '.js');
       }
     },
   });
