@@ -1,22 +1,20 @@
 const microAppName = '{{ appName }}';
-const pages = {{ pages }};
+let pages = {{ pages }};
 const version = '{{ version }}';
 
 const modules = [];
-Object.keys(pages).forEach(item => {
-  if (item !== 'common') {
-    modules.push({
-      ...pages[item],
-      moduleName: item,
-      getComponent: () => {
-        if (version) {
-          return System.import(PUBLIC_PATH + item + '.js?t=' + version);
-        } else {
-          return System.import(PUBLIC_PATH + item + '.js');
-        }
-      },
-    });
-  }
+pages.forEach(item => {
+  modules.push({
+    ...item,
+    moduleName: item.module,
+    getComponent: () => {
+      if (version) {
+        return System.import(PUBLIC_PATH + item.module + '.js?t=' + version);
+      } else {
+        return System.import(PUBLIC_PATH + item.module + '.js');
+      }
+    },
+  });
 });
 
 export default {

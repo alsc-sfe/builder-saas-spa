@@ -13,11 +13,24 @@ nunjucks.configure('*', {
   autoescape: false,
 });
 
+const filterPage = (pages) => {
+  if (!Array.isArray(pages)) {
+    return Object.keys(pages).map(item => ({
+      ...pages[item],
+      module: item,
+    }));
+  }
+  return pages;
+};
+
 module.exports = function (config, argv) {
   let entries = config.entry || {};
-  const pages = get(SAAS_CONFIG, 'page', {});
-
-  Object.keys(pages).forEach(chunkName => {
+  let pages = get(SAAS_CONFIG, 'page', {});
+  pages = filterPage(pages);
+  
+  // entry 去重
+  const entrys = Array.from(new Set(pages.map(item => item.module)));
+  entrys.forEach(chunkName => {
     let entryValue = [];
     let hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
 
@@ -33,11 +46,25 @@ module.exports = function (config, argv) {
     entries[chunkName] = resolveEntry.concat(entryValue);
   })
 
+  const pagesNew = [];
+  let num = 1;
+  pages.forEach(item => {
+    if (pagesNew.findIndex(itemInner => itemInner.module === item.module) > -1) {
+      pagesNew.push({
+        ...item,
+        module: `${item.module}-${num}`,
+      });
+      num++;
+    } else {
+      pagesNew.push(item);
+    }
+  });
+
   fs.writeFileSync(
     path.join(ROOT_PATH, '.micro_app_config.js'),
     nunjucks.renderString(fs.readFileSync(path.join(__dirname, '../dynamic/micro_app_config.nunjucks')).toString(), {
       appName: microAppName,
-      pages: JSON.stringify(pages),
+      pages: JSON.stringify(pagesNew),
       version: PUBLISH_ENV === 'daily' ? (+ new Date()) : '',
     }),
   );
