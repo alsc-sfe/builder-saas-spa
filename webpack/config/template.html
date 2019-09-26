@@ -54,7 +54,6 @@
     .microfe-layout {
       height: 100%;
       display: flex;
-      overflow: hidden;
     }
     .microfe-menu {
       height: 100%;
@@ -62,33 +61,23 @@
     .microfe-body {
       flex: 1;
       height: 100%;
+      overflow: auto;
+    }
+    .microfe-root-body {
+      position: relative;
+      height: 100%;
       display: flex;
       flex-direction: column;
+      min-width: 1140px;
     }
-    .microfe-root-body{
+    .microfe-root-content {
       flex: 1;
-      overflow: auto;
-      position: relative;
+      height: 100%;
     }
-    .microfe-root-content,
     .microfe-module,
     .microfe-module>div {
       height: 100%;
     }
-   
-    @media screen and (max-width:1440px){
-      .microfe-root-body {
-        max-width: calc(100vw - 300px)!important;
-        min-width:100%;
-      }
-      .microfe-body .microfe-root-content{
-        min-width:1140px;  
-      }
-    }
-    @media screen and (min-width:2880px){
-      .microfe-layout .microfe-body{
-        max-width: 2730px;
-      }
     }
   </style>
 </head>
@@ -97,8 +86,8 @@
   <div class="microfe-layout">
     <div class="microfe-menu" id="<%- commonAppName %>__menu"></div>
     <div class="microfe-body">
-      <div class="microfe-navbar" id="<%- commonAppName %>__navbar"></div>
-      <div class="microfe-root-body">
+      <div class="microfe-root-body">  
+        <div class="microfe-navbar" id="<%- commonAppName %>__navbar"></div>
         <div class="microfe-root-content" id="__microfe-root-content"></div>
       </div>
     </div>
