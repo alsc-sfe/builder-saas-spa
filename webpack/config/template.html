@@ -140,6 +140,13 @@
             <% if (layout) { %>
             {
               microAppConfigPath: '<%= layout %>',
+              getModules: function(modules) {
+                const module = modules.find(({ moduleName }) => moduleName === 'menu');
+                module.afterRouteDiscover = (match) => {
+                  document.querySelector('#microfe-layout').classList[match ? 'remove' : 'add']('microfe-layout--nomenu');
+                };
+                return modules;
+              },
             },
             <% } %>
             {
