@@ -2,7 +2,7 @@
   const { assets_url, heads, bodies, pages, debug, microAppName, commonAppName, layout } = htmlWebpackPlugin.options
   const version = '?v=' + (+ new Date())
   const antdVersion = "3.22.2-beta.5"
-  const waLoaderVersion = "0.0.3-beta.42"
+  const waLoaderVersion = "1.0.0-beta.10"
 %>
 <!DOCTYPE html>
 <html lang="zh">
@@ -18,7 +18,7 @@
   <% } %>
 
   <link rel="stylesheet" href="https://gw.alipayobjects.com/os/lib/ali/antd-boh/<%= antdVersion %>/dist/antd.css">
-  <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/micro-app-loader/<%= waLoaderVersion %>/dist/micro-app-loader-with-config.system.js" as="script" crossorigin="anonymous">
+  <link rel="preload" href="https://gw.alipayobjects.com/os/mentor/saas-micro-app-loader/<%= waLoaderVersion %>/system/micro-app-loader-with-config.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js" as="script" crossorigin="anonymous">
   <link rel="preload" href="https://gw.alipayobjects.com/os/lib/ali/antd-boh/<%= antdVersion %>/dist/antd-with-locales.js" as="script" crossorigin="anonymous">
@@ -36,7 +36,7 @@
   <script type="systemjs-importmap">
     {
       "imports": {
-        "MicroAppLoader": "https://gw.alipayobjects.com/os/lib/ali/micro-app-loader/<%= waLoaderVersion %>/dist/micro-app-loader-with-config.system.js",
+        "MicroAppLoader": "https://gw.alipayobjects.com/os/mentor/saas-micro-app-loader/<%= waLoaderVersion %>/system/micro-app-loader-with-config.js",
         "React": "https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js",
         "ReactDOM": "https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js",
         "antd": "https://gw.alipayobjects.com/os/lib/ali/antd-boh/<%= antdVersion %>/dist/antd-with-locales.js",
@@ -99,6 +99,9 @@
   <% } %>
   <script>
       (async function() {
+        System.import('React');
+        System.import('ReactDOM');
+
         const SaasFetch = (await System.import('saas-fetch')).default;
         const SaasFetchMtop = (await System.import('saas-fetch-mtop')).default;
         function defaultNoSeesionAction() {
