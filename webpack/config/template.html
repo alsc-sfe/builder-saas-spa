@@ -124,7 +124,7 @@
           }
         }])
 
-        const MicroAppLoader = (await System.import('MicroAppLoader')).default;
+        const MicroAppLoader = (await System.import('MicroAppLoader'));
         MicroAppLoader.start({
           // routerType: MicroAppLoader.RouterType.hash,
           getMicroAppConfigPath: (appConfigPath) => {
