@@ -2,6 +2,7 @@
 
 const path = require('path');
 const ROOT_PATH = require('../util/const').ROOT_PATH;
+const resolveAntd = require('../util/resolveAntd');
 
 module.exports = function (config) {
   config.resolve = config.resolve || {};
@@ -19,6 +20,9 @@ module.exports = function (config) {
     'saas-fetch': '@ali/saas-fetch',
     'saas-fetch-mtop': '@ali/saas-fetch-mtop',
   };
+  resolveAntd(config.resolve.alias);
+
+  console.log(config.resolve.alias);
 
   config.resolve.modules = mPath;
 

@@ -1,6 +1,6 @@
 {
   "name": "@ali/builder-saas-spa",
-  "version": "1.3.20",
+  "version": "1.3.21",
   "description": "The DEF Koubei Saas builder",
   "scripts": {},
   "repository": {
@@ -33,6 +33,7 @@
     "@babel/polyfill": "7",
     "@babel/preset-env": "7",
     "@babel/preset-react": "7",
+    "antd": "3",
     "autoprefixer": "7",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "8",
