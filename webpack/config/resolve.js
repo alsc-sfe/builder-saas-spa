@@ -22,8 +22,6 @@ module.exports = function (config) {
   };
   resolveAntd(config.resolve.alias);
 
-  console.log(config.resolve.alias);
-
   config.resolve.modules = mPath;
 
   config.resolveLoader = {
