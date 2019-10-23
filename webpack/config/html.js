@@ -19,7 +19,7 @@ module.exports = function (config, argv) {
 
   let layout = get(SAAS_CONFIG, 'layout', false);
   if (layout === true) {
-    layout = 'alsc-saas/web-boh-common/1.2.1';
+    layout = 'alsc-saas/web-boh-common/1.2.3';
   }
 
   microAppName = microAppName ? microAppName : 'bcommon';
