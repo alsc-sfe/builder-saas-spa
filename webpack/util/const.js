@@ -14,7 +14,7 @@ const SRC_PATH = path.resolve(ROOT_PATH, 'src');
 const BUILD_PATH = BUILDER_ENV.BUILD_DEST ? path.join(ROOT_PATH, BUILDER_ENV.BUILD_DEST) : path.resolve(ROOT_PATH, 'build');
 const BUILD_GIT_GROUP = BUILDER_ENV.BUILD_GIT_GROUP;
 const BUILD_GIT_PROJECT = BUILDER_ENV.BUILD_GIT_PROJECT;
-const BUILD_GIT_VERSION = BUILDER_ENV.BUILD_GIT_VERSION;
+const BUILD_GIT_VERSION = BUILDER_ENV.BUILD_GIT_VERSION || '0.0.1';
 let PUBLISH_ENV = '';
 
 let argv = !!BUILDER_ENV.BUILD_ARGV_STR ? parse(BUILDER_ENV.BUILD_ARGV_STR) : {};
@@ -28,21 +28,27 @@ let argv = !!BUILDER_ENV.BUILD_ARGV_STR ? parse(BUILDER_ENV.BUILD_ARGV_STR) : {}
 // BUILD_ENV === 'cloud' 云构建、BUILD_ENV === 'local' 本地构建
 if (BUILD_ENV === 'cloud' && !argv.def_publish_env) {
   console.log(chalk.red('未开启线上构建, 参考文档：https://yuque.antfin-inc.com/alsc-saas/vt2tmg/ehge2p#UqnpK'));
-  process.exit(0);  
+  process.exit(0);
 }
 
 // 获取发布环境（daily、prod）
 PUBLISH_ENV = argv.def_publish_env;
-let CDN_BASE = '//g.alicdn.com/';
-if (argv.def_publish_env === 'daily') {
-  CDN_BASE = '//dev.g.alicdn.com/';
-}
+const CDN_BASE_DAILY = '//dev.g.alicdn.com/';
+const CDN_BASE_PROD = '//g.alicdn.com/';
+let CDN_BASE = CDN_BASE_DAILY;
 
+// 根据构建环境设置ASSETS_URL，ASSETS_URL作为静态资源的基础路径
 let ASSETS_URL = '/';
-
-// 云构建时设置ASSETS_URL
-if (BUILD_ENV === 'cloud') {
-  ASSETS_URL = url(CDN_BASE, BUILD_GIT_GROUP, BUILD_GIT_PROJECT, BUILD_GIT_VERSION, '/');
+switch (BUILD_ENV) {
+  case 'cloud':
+    CDN_BASE = PUBLISH_ENV === 'daily' ? CDN_BASE_DAILY : CDN_BASE_PROD;
+    ASSETS_URL = url(CDN_BASE, BUILD_GIT_GROUP, BUILD_GIT_PROJECT, BUILD_GIT_VERSION, '/');
+    break;
+  case 'local':
+    ASSETS_URL = url(CDN_BASE, BUILD_GIT_GROUP, BUILD_GIT_PROJECT, BUILD_GIT_VERSION, '/');
+    break;
+  default:
+    break;
 }
 
 // CSS MODULE NAMESPACE
