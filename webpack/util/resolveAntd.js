@@ -13,6 +13,9 @@ const toHump = (name) => {
 }
 
 module.exports = function(alias) {
+  if (!fs.existsSync(path.join(__dirname, '../mock'))) {
+    fs.mkdirSync(path.join(__dirname, '../mock'));
+  }
   if (!fs.existsSync(path.join(__dirname, '../mock/antd'))) {
     fs.mkdirSync(path.join(__dirname, '../mock/antd'));
   }
