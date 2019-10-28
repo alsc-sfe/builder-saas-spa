@@ -33,7 +33,7 @@
     "@babel/polyfill": "7",
     "@babel/preset-env": "7",
     "@babel/preset-react": "7",
-    "antd": "3",
+    "antd": "3.24.2",
     "autoprefixer": "7",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "8",
