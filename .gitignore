@@ -12,4 +12,3 @@ coverage
 __mockdef
 npm-debug.log
 package-lock.json
-antd

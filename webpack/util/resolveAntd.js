@@ -13,14 +13,14 @@ const toHump = (name) => {
 }
 
 module.exports = function(alias) {
-  if (!fs.existsSync(path.join(__dirname, '../mock'))) {
-    fs.mkdirSync(path.join(__dirname, '../mock'));
-  }
-  if (!fs.existsSync(path.join(__dirname, '../mock/antd'))) {
-    fs.mkdirSync(path.join(__dirname, '../mock/antd'));
-  }
-  const cssFileProxyPath = path.join(__dirname, '../mock/antd/empty.less');  
-  fs.writeFileSync(cssFileProxyPath, '');
+  // if (!fs.existsSync(path.join(__dirname, '../mock'))) {
+  //   fs.mkdirSync(path.join(__dirname, '../mock'));
+  // }
+  // if (!fs.existsSync(path.join(__dirname, '../mock/antd'))) {
+  //   fs.mkdirSync(path.join(__dirname, '../mock/antd'));
+  // }
+  // const cssFileProxyPath = path.join(__dirname, '../mock/antd/empty.less');  
+  // fs.writeFileSync(cssFileProxyPath, '');
 
   const antdFolder = path.join(__dirname, '../../node_modules/antd');
   const items = fs.readdirSync(path.join(antdFolder, 'lib'));
@@ -30,10 +30,10 @@ module.exports = function(alias) {
       alias[styleFilePath] = path.join(__dirname, '../mock/antd/empty.less');
       const jsFilePath = `antd/lib/${item}`;
       const jsFileProxyPath = path.join(__dirname, `../mock/antd/${item}.js`);  
-      fs.writeFileSync(jsFileProxyPath, `
-        const ${toHump(item)} = window.antd['${toHump(item)}'];
-        export { ${toHump(item)} as default };
-      `);
+      // fs.writeFileSync(jsFileProxyPath, `
+      //   const ${toHump(item)} = window.antd['${toHump(item)}'];
+      //   export { ${toHump(item)} as default };
+      // `);
       alias[jsFilePath] = jsFileProxyPath;
     }
   });
