@@ -1,7 +1,7 @@
 {
-  "name": "@ali/builder-saas-spa",
+  "name": "@saasfe/builder-saas-spa",
   "version": "1.3.35",
-  "description": "The DEF Koubei Saas builder",
+  "description": "The KOS Builder Module for Saas MicroApp",
   "scripts": {},
   "repository": {
     "type": "git",
@@ -10,19 +10,17 @@
   "author": "yongbao.fyb",
   "license": "ISC",
   "publishConfig": {
-    "registry": "http://registry.npm.alibaba-inc.com"
+    "registry": "http://registry.npmjs.org/"
   },
   "keywords": [
     "builder",
-    "def",
+    "kos",
     "cloudbuild",
-    "koubei",
     "saas"
   ],
   "dependencies": {
-    "@ali/babel-plugin-react-css-module-transformer": "^1.0.2",
-    "@ali/def-pub-client": "^2.2.0",
-    "@ali/saas-webpack-system-module": "1",
+    "@saasfe/babel-plugin-react-css-module-transformer": "^1.0.2",
+    "@saasfe/saas-webpack-system-module": "1",
     "@babel/core": "7",
     "@babel/plugin-proposal-class-properties": "7",
     "@babel/plugin-proposal-decorators": "7",
