@@ -19,8 +19,6 @@
     "saas"
   ],
   "dependencies": {
-    "@saasfe/babel-plugin-react-css-module-transformer": "^1.0.2",
-    "@saasfe/saas-webpack-system-module": "1",
     "@babel/core": "7",
     "@babel/plugin-proposal-class-properties": "7",
     "@babel/plugin-proposal-decorators": "7",
@@ -31,6 +29,8 @@
     "@babel/polyfill": "7",
     "@babel/preset-env": "7",
     "@babel/preset-react": "7",
+    "@saasfe/babel-plugin-react-css-module-transformer": "^1.0.2",
+    "@saasfe/saas-webpack-system-module": "1",
     "antd": "3.24.2",
     "autoprefixer": "7",
     "awesome-typescript-loader": "^5.2.1",
@@ -50,6 +50,7 @@
     "less-loader": "4",
     "lodash": "4",
     "nunjucks": "^3.2.0",
+    "open": "^7.0.0",
     "optimize-css-assets-webpack-plugin": "5",
     "postcss-less": "^3.1.4",
     "postcss-loader": "3",

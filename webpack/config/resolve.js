@@ -20,6 +20,7 @@ module.exports = function (config) {
   //   'saas-fetch': '@ali/saas-fetch',
   //   'saas-fetch-mtop': '@ali/saas-fetch-mtop',
   // };
+  config.resolve.alias = {};
   resolveAntd(config.resolve.alias);
 
   config.resolve.modules = mPath;
