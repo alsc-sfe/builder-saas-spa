@@ -35,12 +35,12 @@ module.exports = {
       resolve('@babel/plugin-proposal-export-default-from'),
       resolve('@babel/plugin-proposal-export-namespace-from'),
       resolve('babel-plugin-syntax-dynamic-import'),
-      [resolve('babel-plugin-import'), {
-        libraryName: '@ali/saas-biz-pc',
-        libraryDirectory: 'es',
-        style: true,
-      }, '@ali/saas-biz-pc'],
-      resolve('@ali/babel-plugin-react-css-module-transformer'),
+      // [resolve('babel-plugin-import'), {
+      //   libraryName: '@ali/saas-biz-pc',
+      //   libraryDirectory: 'es',
+      //   style: true,
+      // }, '@ali/saas-biz-pc'],
+      resolve('@saasfe/babel-plugin-react-css-module-transformer'),
       [resolve('babel-plugin-react-css-modules'), {
         context: 'src',
         generateScopedName: `${CSS_SCOPE}_[path][local]_[hash:base64:5]`,

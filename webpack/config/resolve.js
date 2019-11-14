@@ -16,10 +16,10 @@ module.exports = function (config) {
   ];
 
   // 创建 import 或 require 的别名
-  config.resolve.alias = {
-    'saas-fetch': '@ali/saas-fetch',
-    'saas-fetch-mtop': '@ali/saas-fetch-mtop',
-  };
+  // config.resolve.alias = {
+  //   'saas-fetch': '@ali/saas-fetch',
+  //   'saas-fetch-mtop': '@ali/saas-fetch-mtop',
+  // };
   resolveAntd(config.resolve.alias);
 
   config.resolve.modules = mPath;

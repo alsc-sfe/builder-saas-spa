@@ -4,7 +4,7 @@ const path = require('path');
 const webpack = require('webpack');
 const get = require('lodash/get');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const systemModulePlugin = require('@ali/saas-webpack-system-module');
+const systemModulePlugin = require('@saasfe/saas-webpack-system-module');
 const { ROOT_PATH, SAAS_CONFIG, ASSETS_URL } = require('../util/const');
 
 const microAppName = get(SAAS_CONFIG, 'microAppName', '');
