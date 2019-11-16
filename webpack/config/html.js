@@ -19,11 +19,11 @@ module.exports = function (config, argv) {
 
   let layout = get(SAAS_CONFIG, 'layout', false);
   if (layout === true) {
-    layout = 'alsc-saas/web-boh-common/1.2.3';
+    layout = 'boh-layout/dev/1.0.0';
   }
 
-  microAppName = microAppName ? microAppName : 'bcommon';
-  const commonAppName = isCommonApp ? microAppName : 'bcommon';
+  microAppName = microAppName ? microAppName : 'boh-layout';
+  const commonAppName = isCommonApp ? microAppName : 'boh-layout';
 
   htmlWebpackPlugins.push(new HtmlWebpackPlugin({
     inject: false,
