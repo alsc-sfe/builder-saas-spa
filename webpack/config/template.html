@@ -38,11 +38,7 @@
   <script src="https://gw.alipayobjects.com/as/g/component/babel-polyfill/6.20.0/polyfill.min.js"></script>
 
   <script src="https://gw.alipayobjects.com/os/lib/systemjs/6.1.4/dist/system.min.js" crossorigin="anonymous"></script>
-  <script src="https://gw.alipayobjects.com/os/lib/systemjs/6.1.4/dist/extras/named-register.min.js" crossorigin="anonymous"></script>
-  
-  <script src="https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js" crossorigin="anonymous"></script>
-  <script src="https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js" crossorigin="anonymous"></script>
-  
+    
   <script src="https://gw.alipayobjects.com/os/lib/moment/2.24.0/min/moment.min.js" crossorigin="anonymous"></script>
   <script src="https://gw.alipayobjects.com/os/lib/moment/2.24.0/locale/zh-cn.js" crossorigin="anonymous"></script>
 
@@ -51,6 +47,8 @@
     {
       "imports": {
         "MicroAppLoader": "https://gw.alipayobjects.com/os/mentor/choice-we-app-loader/<%= waLoaderVersion %>/system/choice-we-app-loader.js",
+        "React": "https://gw.alipayobjects.com/os/lib/react/16.8.6/umd/react.development.js",
+        "ReactDOM": "https://gw.alipayobjects.com/os/lib/react-dom/16.8.6/umd/react-dom.development.js"
         "antd": "https://gw.alipayobjects.com/os/lib/ali/antd-boh/<%= antdVersion %>/dist/antd-with-locales.js",
         "singleSpa": "https://gw.alipayobjects.com/os/lib/single-spa/4.3.5/lib/system/single-spa.min.js",
         "AntDesignIcons": "https://gw.alipayobjects.com/os/lib/ant-design/icons/2.1.1/lib/umd.js",
@@ -115,68 +113,46 @@
     <%= bodies[i] %>
   <% } %>
   <script>
-      (function() {
-        System.register('React', [], function(exports) {
-          return {
-            execute: function() {
-              exports(window.React);
-            }
-          };
-        });
-        System.register('ReactDOM', ['React'], function(exports) {
-          return {
-            setters: [
-              function() {},
-            ],
-            execute: function() {
-              exports(window.ReactDOM);
-            }
-          };
-        });
+      (async function() {
+        System.import('React');
+        System.import('ReactDOM');
 
-        System.import('saas-fetch')
-          .then(function(mod) {
-            return mod.default;
-          })
-          .then(function(SaasFetch) {
-            SaasFetch.setup({});
-          });
+        const SaasFetch = (await System.import('saas-fetch')).default;
+        SaasFetch.setup({});
 
-        System.import('MicroAppLoader')
-          .then(function(MicroAppLoader) {
-            MicroAppLoader.start({
-              // routerType: MicroAppLoader.RouterType.hash,
-              getMicroAppConfigPath: (appConfigPath) => {
-                if (!appConfigPath) {
-                  throw new Error('Please specify appConfigPath.');
-                }
-                if (appConfigPath.lastIndexOf('app-config.js') > -1) {
-                  return appConfigPath;
-                }
-                return '//bohstatic.dev.choicesaas.cn/' + appConfigPath + '/app-config.js';
-              },
-              microApps: [
-                <% if (layout) { %>
-                {
-                  microAppConfigPath: '<%= layout %>',
-                },
-                <% } %>
-                {
-                  microAppConfigPath: '/app-config.js',
-                },
-              ],
-              lifecycleAspect: {
-                before: (...args) => console.log('lifecycleAspect before called', args),
-                after(...args) {
-                  const { module, microAppConfig, stage } = this;
-                  const { moduleName } = module;
-                  const { microAppName } = microAppConfig;
-                  console.log(microAppName + '.' + moduleName + ' ' + stage + ' lifecycleAspect after called', args);
-                },
-                onError: (...args) => console.log('lifecycleAspect onError called', args),
-              },
-            });
-          });      
+        const MicroAppLoader = (await System.import('MicroAppLoader'));
+        MicroAppLoader.start({
+          // routerType: MicroAppLoader.RouterType.hash,
+          getMicroAppConfigPath: (appConfigPath) => {
+            if (!appConfigPath) {
+              throw new Error('Please specify appConfigPath.');
+            }
+            if (appConfigPath.lastIndexOf('app-config.js') > -1) {
+              return appConfigPath;
+            }
+            return '//bohstatic.dev.choicesaas.cn/' + appConfigPath + '/app-config.js';
+          },
+          microApps: [
+            <% if (layout) { %>
+            {
+              microAppConfigPath: '<%= layout %>',
+            },
+            <% } %>
+            {
+              microAppConfigPath: '/app-config.js',
+            },
+          ],
+          lifecycleAspect: {
+            before: (...args) => console.log('lifecycleAspect before called', args),
+            after(...args) {
+              const { module, microAppConfig, stage } = this;
+              const { moduleName } = module;
+              const { microAppName } = microAppConfig;
+              console.log(microAppName + '.' + moduleName + ' ' + stage + ' lifecycleAspect after called', args);
+            },
+            onError: (...args) => console.log('lifecycleAspect onError called', args),
+          },
+        });
       }());
   </script>
 </body>
