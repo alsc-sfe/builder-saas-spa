@@ -43,7 +43,7 @@
     "clean-webpack-plugin": "0",
     "co": "^4.6.0",
     "copy-webpack-plugin": "4",
-    "css-loader": "1",
+    "css-loader": "2",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-plugin": "3",
     "less": "^2.7.3",
