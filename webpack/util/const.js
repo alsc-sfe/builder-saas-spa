@@ -7,7 +7,10 @@ const parse = require('yargs-parser');
 const BUILDER_ENV = require('./env');
 const ROOT_PATH = process.cwd();
 const SAAS_CONFIG = require(path.join(ROOT_PATH, 'app.config.ts'));
+const PLATFORM = process.platform;
 
+console.log('platform', PLATFORM);
+console.log('ROOT_PATH ', ROOT_PATH );
 // 云构建 || 本地构建
 const BUILD_ENV = BUILDER_ENV.BUILD_ENV;
 const SRC_PATH = path.resolve(ROOT_PATH, 'src');
@@ -52,7 +55,7 @@ switch (BUILD_ENV) {
 }
 
 // CSS MODULE NAMESPACE
-let CSS_SCOPE = ROOT_PATH.split('/').pop().split('-').pop();
+let CSS_SCOPE = ROOT_PATH.split(path.sep).pop().split('-').pop();
 
 const PATH_PARAMS = {
   ROOT_PATH,

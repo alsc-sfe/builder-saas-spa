@@ -35,11 +35,11 @@ module.exports = {
       resolve('@babel/plugin-proposal-export-default-from'),
       resolve('@babel/plugin-proposal-export-namespace-from'),
       resolve('babel-plugin-syntax-dynamic-import'),
-      // [resolve('babel-plugin-import'), {
-      //   libraryName: '@ali/saas-biz-pc',
-      //   libraryDirectory: 'es',
-      //   style: true,
-      // }, '@ali/saas-biz-pc'],
+      [resolve('babel-plugin-import'), {
+        libraryName: 'choice-cbm',
+        libraryDirectory: 'es',
+        style: true,
+      }, 'choice-cbm'],
       resolve('@saasfe/babel-plugin-react-css-module-transformer'),
       [resolve('babel-plugin-react-css-modules'), {
         context: 'src',
