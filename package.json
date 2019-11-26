@@ -1,5 +1,5 @@
 {
-  "name": "@alsc-sfe/builder-saas-spa",
+  "name": "@saasfe/builder-saas-spa",
   "version": "1.4.13",
   "description": "The KOS Builder Module for Saas MicroApp",
   "scripts": {},
