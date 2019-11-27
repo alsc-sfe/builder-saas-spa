@@ -35,24 +35,31 @@ if (BUILD_ENV === 'cloud' && !argv.def_publish_env) {
 }
 
 // 获取发布环境（daily、prod）
-PUBLISH_ENV = argv.def_publish_env;
-const CDN_BASE_DAILY = '//dev.g.alicdn.com/';
+// PUBLISH_ENV = argv.def_publish_env;
+PUBLISH_ENV = 'dev';
+const CDN_BASE_DAILY = '//bohstatic.dev.choicesaas.cn';
 const CDN_BASE_PROD = '//g.alicdn.com/';
 let CDN_BASE = CDN_BASE_DAILY;
 
 // 根据构建环境设置ASSETS_URL，ASSETS_URL作为静态资源的基础路径
 let ASSETS_URL = '/';
-switch (BUILD_ENV) {
-  case 'cloud':
-    CDN_BASE = PUBLISH_ENV === 'daily' ? CDN_BASE_DAILY : CDN_BASE_PROD;
-    ASSETS_URL = url(CDN_BASE, BUILD_GIT_GROUP, BUILD_GIT_PROJECT, BUILD_GIT_VERSION, '/');
-    break;
-  case 'local':
-    ASSETS_URL = url(CDN_BASE, BUILD_GIT_GROUP, BUILD_GIT_PROJECT, BUILD_GIT_VERSION, '/');
-    break;
-  default:
-    break;
-}
+// https://g.alicdn.com/alsc-saas/web-boh-common/1.2.7/navbar.js
+// 暂时写死为dev http://bohstatic.dev.choicesaas.cn/boh-layout/dev/1.0.0/navbar.js
+ASSETS_URL = url(CDN_BASE, BUILD_GIT_PROJECT, PUBLISH_ENV, BUILD_GIT_VERSION, '/');
+
+console.log('CONST ASSETS_URL', ASSETS_URL);
+
+// switch (BUILD_ENV) {
+//   case 'cloud':
+//     CDN_BASE = PUBLISH_ENV === 'daily' ? CDN_BASE_DAILY : CDN_BASE_PROD;
+//     ASSETS_URL = url(CDN_BASE, BUILD_GIT_GROUP, BUILD_GIT_PROJECT, BUILD_GIT_VERSION, '/');
+//     break;
+//   case 'local':
+//     ASSETS_URL = url(CDN_BASE, BUILD_GIT_GROUP, BUILD_GIT_PROJECT, BUILD_GIT_VERSION, '/');
+//     break;
+//   default:
+//     break;
+// }
 
 // CSS MODULE NAMESPACE
 let CSS_SCOPE = ROOT_PATH.split(path.sep).pop().split('-').pop();

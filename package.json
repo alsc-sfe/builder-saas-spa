@@ -1,5 +1,5 @@
 {
-  "name": "@saasfe/builder-saas-spa",
+  "name": "@alsc-sfe/builder-saas-spa",
   "version": "1.4.13",
   "description": "The KOS Builder Module for Saas MicroApp",
   "scripts": {},
@@ -10,7 +10,7 @@
   "author": "yongbao.fyb",
   "license": "ISC",
   "publishConfig": {
-    "registry": "http://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/"
   },
   "keywords": [
     "builder",
