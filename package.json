@@ -1,6 +1,6 @@
 {
-  "name": "@alsc-sfe/builder-saas-spa",
-  "version": "1.4.13",
+  "name": "@saasfe/builder-saas-spa",
+  "version": "1.4.15",
   "description": "The KOS Builder Module for Saas MicroApp",
   "scripts": {},
   "repository": {
