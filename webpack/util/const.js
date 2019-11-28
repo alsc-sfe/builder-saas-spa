@@ -9,11 +9,14 @@ const ROOT_PATH = process.cwd();
 const SAAS_CONFIG = require(path.join(ROOT_PATH, 'app.config.ts'));
 const PKG = require(path.join(ROOT_PATH, 'package.json'));
 const PLATFORM = process.platform;
+const BUILD_ENV = process.env.NODE_ENV;
+
 
 console.log('platform', PLATFORM);
 console.log('ROOT_PATH ', ROOT_PATH );
+
 // 云构建 || 本地构建
-const BUILD_ENV = BUILDER_ENV.BUILD_ENV;
+// const BUILD_ENV = BUILDER_ENV.BUILD_ENV;
 const SRC_PATH = path.resolve(ROOT_PATH, 'src');
 const BUILD_PATH = BUILDER_ENV.BUILD_DEST ? path.join(ROOT_PATH, BUILDER_ENV.BUILD_DEST) : path.resolve(ROOT_PATH, 'build');
 const BUILD_GIT_GROUP = BUILDER_ENV.BUILD_GIT_GROUP;
@@ -43,10 +46,10 @@ const CDN_BASE_PROD = '//g.alicdn.com/';
 let CDN_BASE = CDN_BASE_DAILY;
 
 // 根据构建环境设置ASSETS_URL，ASSETS_URL作为静态资源的基础路径
-let ASSETS_URL = '/';
+// let ASSETS_URL = '/';
 // https://g.alicdn.com/alsc-saas/web-boh-common/1.2.7/navbar.js
 // 暂时写死为dev http://bohstatic.dev.choicesaas.cn/boh-layout/dev/1.0.0/navbar.js
-ASSETS_URL = url(CDN_BASE, BUILD_GIT_PROJECT, PUBLISH_ENV, BUILD_GIT_VERSION, '/');
+let ASSETS_URL = BUILD_ENV === 'development' ? '/' : url(CDN_BASE, BUILD_GIT_PROJECT, PUBLISH_ENV, BUILD_GIT_VERSION, '/');
 
 console.log('CONST ASSETS_URL', ASSETS_URL);
 
