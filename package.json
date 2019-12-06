@@ -1,6 +1,6 @@
 {
   "name": "@saasfe/builder-saas-spa",
-  "version": "1.4.20",
+  "version": "1.4.21",
   "description": "The KOS Builder Module for Saas MicroApp",
   "scripts": {},
   "repository": {
@@ -39,7 +39,7 @@
     "babel-plugin-react-css-modules": "^5.2.6",
     "babel-plugin-syntax-dynamic-import": "6",
     "chalk": "2",
-    "choice-cbm": "^1.0.5",
+    "choice-cbm": "^1.0.6",
     "chokidar": "^3.0.2",
     "clean-webpack-plugin": "0",
     "co": "^4.6.0",
