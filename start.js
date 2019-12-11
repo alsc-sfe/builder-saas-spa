@@ -72,8 +72,10 @@ const start = async () => {
     },
   }
 
+  const { port, path, query, ...rest } = get(SAAS_CONFIG, 'webpack.devServer', {});
+  const startDevOption = Object.assign(devServerOption, rest);
   // compile and start server
-  const server = new WebpackDevServer(compiler, devServerOption);
+  const server = new WebpackDevServer(compiler, startDevOption);
   server.listen(startParam.port, '0.0.0.0')
 }
 
