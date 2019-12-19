@@ -42,7 +42,7 @@ const BUILD_GIT_PROJECT = PKG.name;
 const BUILD_GIT_VERSION = PKG.version || '0.0.1';
 const CDN_BASE_DAILY = '//cdn.dev.choicesaas.cn';
 const CDN_BASE_PROD = '//cdn.choicesaas.cn';
-let CDN_BASE = PUBLISH_ENV === 'prod' || PUBLISH_ENV === 'pre' ? CDN_BASE_PROD : CDN_BASE_DAILY;
+let CDN_BASE = PUBLISH_ENV === 'prod' ? CDN_BASE_PROD : CDN_BASE_DAILY;
 
 // 根据构建环境设置ASSETS_URL，ASSETS_URL作为静态资源的基础路径
 // let ASSETS_URL = '/';
