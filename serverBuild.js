@@ -1,7 +1,9 @@
 const cp = require('child_process');
 const path = require('path');
 
-const start = () => {
+const start = (opts) => {
+  console.log('builder serverBuild', opts);
+  process.env.KOS_PUBLISH_ENV = opts;
   const child = cp.fork(path.join(__dirname, 'build.js'));
   child.on('message', data => {
     if (data === 'restart') {
@@ -13,4 +15,4 @@ const start = () => {
   child.on('exit', code => code && process.exit(code));
 };
 
-start();
+module.exports = start;
