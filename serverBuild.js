@@ -3,7 +3,8 @@ const path = require('path');
 
 const start = (opts) => {
   console.log('builder serverBuild', opts);
-  process.env.KOS_PUBLISH_ENV = opts;
+  process.env.KOS_PUBLISH_ENV = opts.env;
+  process.env.KOS_PUBLISH_VERSION = opts.version;
   const child = cp.fork(path.join(__dirname, 'build.js'));
   child.on('message', data => {
     if (data === 'restart') {
