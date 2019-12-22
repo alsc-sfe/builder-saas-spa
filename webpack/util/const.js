@@ -13,7 +13,6 @@ const BUILD_ENV = process.env.NODE_ENV;
 const KOS_PUBLISH_ENV = process.env.KOS_PUBLISH_ENV;
 const KOS_PUBLISH_VERSION = process.env.KOS_PUBLISH_VERSION;
 
-console.log('platform', PLATFORM);
 console.log('ROOT_PATH ', ROOT_PATH );
 console.log('process env', process.env);
 
