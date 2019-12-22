@@ -12,6 +12,8 @@ const PLATFORM = process.platform;
 const BUILD_ENV = process.env.NODE_ENV;
 const KOS_PUBLISH_ENV = process.env.KOS_PUBLISH_ENV;
 const KOS_PUBLISH_VERSION = process.env.KOS_PUBLISH_VERSION;
+const BUILD_APP_NAME = process.env.BUILD_APP_NAME;
+
 
 console.log('platform', PLATFORM);
 console.log('ROOT_PATH ', ROOT_PATH );
@@ -38,7 +40,6 @@ if (BUILD_ENV === 'cloud' && !KOS_PUBLISH_ENV) {
 // 获取发布环境（daily、prod）
 // PUBLISH_ENV = argv.kos_publish_env;
 const PUBLISH_ENV = KOS_PUBLISH_ENV;
-const BUILD_GIT_PROJECT = PKG.name;
 const CDN_BASE_DAILY = '//cdn.dev.choicesaas.cn';
 const CDN_BASE_PROD = '//cdn.choicesaas.cn';
 let CDN_BASE = PUBLISH_ENV === 'prod' ? CDN_BASE_PROD : CDN_BASE_DAILY;
@@ -47,7 +48,7 @@ let CDN_BASE = PUBLISH_ENV === 'prod' ? CDN_BASE_PROD : CDN_BASE_DAILY;
 // let ASSETS_URL = '/';
 // TODO 后期这里域名要可配置
 // http://cdn.choicesaas.cn/web/dist/appname/build_env/version/xxx.js
-let ASSETS_URL = BUILD_ENV === 'development' ? '/' : url(CDN_BASE, 'web/dist',BUILD_GIT_PROJECT, PUBLISH_ENV, KOS_PUBLISH_VERSION, '/');
+let ASSETS_URL = BUILD_ENV === 'development' ? '/' : url(CDN_BASE, 'web/dist',BUILD_APP_NAME, PUBLISH_ENV, KOS_PUBLISH_VERSION, '/');
 
 console.log('CONST ASSETS_URL', ASSETS_URL);
 
