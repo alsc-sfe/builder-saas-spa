@@ -115,52 +115,55 @@
     <%= bodies[i] %>
   <% } %>
   <script>
-      (async function() {
-        System.import('React');
-        System.import('ReactDOM');
-
-        const SaasFetch = (await System.import('saas-fetch')).default;
-        const SaasFetchChoice = (await System.import('saas-fetch-choice')).default;
-        SaasFetch.registerFetcher('choice', SaasFetchChoice);
-        SaasFetch.setupConfig({
-          typeName: 'choice',
+      (function() {
+        var pReact = System.import('React');
+        var pReactDOM = pReact.then(function() {
+          return System.import('ReactDOM');
         });
-
-        const MicroAppLoader = (await System.import('MicroAppLoader'));
-        MicroAppLoader.start({
-          router: {
-            routerType: MicroAppLoader.RouterType.browser,
-            basename: '/boh',
-          },
-          getMicroAppConfigPath: (appConfigPath) => {
-            if (!appConfigPath) {
-              throw new Error('Please specify appConfigPath.');
-            }
-            if (appConfigPath.lastIndexOf('app-config.js') > -1) {
-              return appConfigPath;
-            }
-            return '//bohstatic.dev.choicesaas.cn/' + appConfigPath + '/app-config.js';
-          },
-          microApps: [
-            <% if (layout) { %>
-            {
-              microAppConfigPath: '<%= layout %>',
+        var pSaaSFetch = pReactDOM.then(function() {
+          return System.import('saas-fetch').then(function(res) {
+            return res.default;
+          });
+        });
+        var pSaaSFetchChoice = pSaaSFetch.then(function(SaasFetch) {
+          return System.import('saas-fetch-choice').then(function(res) {
+            return [SaasFetch, res.default];
+          }).then(function(SaasFetchChoice) {
+            SaasFetch.registerFetcher('choice', SaasFetchChoice);
+            SaasFetch.setupConfig({
+              typeName: 'choice',
+            });
+          });
+        });
+        var pLoader = pSaaSFetchChoice.then(function() {
+          return System.import('MicroAppLoader');
+        });
+        pLoader.then(function(MicroAppLoader) {
+          MicroAppLoader.start({
+            router: {
+              routerType: MicroAppLoader.RouterType.browser,
+              basename: '/boh',
             },
-            <% } %>
-            {
-              microAppConfigPath: '/app-config.js',
+            getMicroAppConfigPath: (appConfigPath) => {
+              if (!appConfigPath) {
+                throw new Error('Please specify appConfigPath.');
+              }
+              if (appConfigPath.lastIndexOf('app-config.js') > -1) {
+                return appConfigPath;
+              }
+              return '//bohstatic.dev.choicesaas.cn/' + appConfigPath + '/app-config.js';
             },
-          ],
-          lifecycleAspect: {
-            before: (...args) => console.log('lifecycleAspect before called', args),
-            after(...args) {
-              const { module, microAppConfig, stage } = this;
-              const { moduleName } = module;
-              const { microAppName } = microAppConfig;
-              console.log(microAppName + '.' + moduleName + ' ' + stage + ' lifecycleAspect after called', args);
-            },
-            onError: (...args) => console.log('lifecycleAspect onError called', args),
-          },
+            microApps: [
+              <% if (layout) { %>
+              {
+                microAppConfigPath: '<%= layout %>',
+              },
+              <% } %>
+              {
+                microAppConfigPath: '/app-config.js',
+              },
+            ],
+          });
         });
       }());
   </script>
