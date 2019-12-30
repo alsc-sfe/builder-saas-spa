@@ -127,7 +127,7 @@
         });
         var pSaaSFetchChoice = pSaaSFetch.then(function(SaasFetch) {
           return System.import('saas-fetch-choice').then(function(res) {
-            return [SaasFetch, res.default];
+            return res.default;
           }).then(function(SaasFetchChoice) {
             SaasFetch.registerFetcher('choice', SaasFetchChoice);
             SaasFetch.setupConfig({
